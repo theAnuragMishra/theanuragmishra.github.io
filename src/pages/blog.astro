@@ -18,7 +18,7 @@ const allPosts = (await getCollection("blog")).sort(
             {
                 allPosts.map((post) => (
                     <li>
-                        <a href={`/posts/${post.slug}/`} class="block group">
+                        <a href={`/posts/${post.id}/`} class="block group">
                             <h2 class="text-xl font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
                                 {post.data.title}
                             </h2>

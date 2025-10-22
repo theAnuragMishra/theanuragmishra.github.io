@@ -7,7 +7,7 @@ const blog = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/blog" }),
   schema: z.object({
     title: z.string(),
-    pubDate: z.date().optional(),
+    pubDate: z.date(),
     description: z.string().optional(),
     image: z
       .object({
@@ -15,7 +15,7 @@ const blog = defineCollection({
         alt: z.string(),
       })
       .optional(),
-    topics: z.array(z.string()),
+    topics: z.array(z.string()).optional(),
   }),
 });
 // Export a single `collections` object to register your collection(s)
