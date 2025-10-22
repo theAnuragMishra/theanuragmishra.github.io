@@ -1,0 +1,56 @@
+---
+import Nav from "./Nav.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import hamburger from "../assets/hamburger.svg";
+import { Image } from "astro:assets";
+
+let menuOpen = false;
+---
+
+<header
+    class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-opacity-60"
+>
+    <nav class="max-w-3xl mx-auto flex items-center justify-between p-4">
+        <!-- Left side: site title -->
+        <a href="/" class="text-lg font-mono font-semibold tracking-tight">
+            Anurag Mishra
+        </a>
+
+        <!-- Right side: actions -->
+        <div class="flex items-center gap-4">
+            <ThemeToggle />
+            <button id="menu-toggle" class="md:hidden p-1">
+                <Image
+                    src={hamburger}
+                    alt="menu"
+                    width={28}
+                    height={28}
+                    class="invert dark:invert-0"
+                />
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile navigation -->
+    <div
+        id="mobile-nav"
+        class="md:hidden border-t border-neutral-200 dark:border-neutral-800 hidden"
+    >
+        <Nav />
+    </div>
+
+    <!-- Desktop navigation -->
+    <div
+        class="hidden md:block border-t border-neutral-200 dark:border-neutral-800"
+    >
+        <Nav />
+    </div>
+</header>
+
+<script is:inline>
+    const toggle = document.getElementById("menu-toggle");
+    const mobileNav = document.getElementById("mobile-nav");
+    toggle?.addEventListener("click", () => {
+        mobileNav?.classList.toggle("hidden");
+    });
+</script>

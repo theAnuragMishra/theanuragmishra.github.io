@@ -1,11 +1,237 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import profileImg from "../assets/pfp.webp";
+import svelteImg from "../assets/svelte.svg";
+import reactImg from "../assets/react.svg";
+import nextImg from "../assets/next.svg";
+import dockerImg from "../assets/docker.svg";
+import ghaImg from "../assets/gha.svg";
+import goImg from "../assets/go.svg";
+import expressImg from "../assets/express.svg";
+import nodeImg from "../assets/node.svg";
+import pgImg from "../assets/postgres.svg";
+import redisImg from "../assets/redis.svg";
+import mongoImg from "../assets/mongodb.svg";
+import mccImg from "../assets/mcc-logo.webp";
+import auraImg from "../assets/aura.svg";
+import mbImg from "../assets/mnnit-buzz.webp";
 ---
 
 <Layout>
-	<Welcome />
+    <div class="max-w-3xl mx-auto px-4 py-12 space-y-16">
+        <!-- INTRO -->
+        <section id="home" class="text-center space-y-4">
+            <img
+                src={profileImg.src}
+                alt="Profile"
+                class="mx-auto rounded-full w-32 h-32 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
+            />
+            <h1 class="text-3xl md:text-4xl font-mono font-semibold">
+                Anurag Kumar Mishra
+            </h1>
+            <p
+                class="text-neutral-600 dark:text-neutral-400 text-sm md:text-base"
+            >
+                India-based Programmer & Chessy
+            </p>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education">
+            <h2
+                class="text-xl font-mono font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+            >
+                Education
+            </h2>
+            <ul class="space-y-2 text-neutral-700 dark:text-neutral-300">
+                <li class="flex justify-between text-sm md:text-base">
+                    <span>B.Tech., MNNIT Allahabad</span>
+                    <i>2023–2027</i>
+                </li>
+                <li class="flex justify-between text-sm md:text-base">
+                    <span>12th, Lord Buddha Public School</span>
+                    <i>2023</i>
+                </li>
+                <li class="flex justify-between text-sm md:text-base">
+                    <span>10th, Lord Buddha Public School</span>
+                    <i>2021</i>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <h2
+                class="text-xl font-mono font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+            >
+                Technical Skills
+            </h2>
+            <div class="grid sm:grid-cols-2 gap-6">
+                {
+                    [
+                        {
+                            title: "Frontend",
+                            skills: [
+                                [svelteImg, "Svelte / SvelteKit"],
+                                [reactImg, "React"],
+                                [nextImg, "Next.js"],
+                            ],
+                        },
+                        {
+                            title: "Backend",
+                            skills: [
+                                [goImg, "Go"],
+                                [nodeImg, "Node.js"],
+                                [expressImg, "Express", "express"],
+                            ],
+                        },
+                        {
+                            title: "Database",
+                            skills: [
+                                [pgImg, "PostgreSQL"],
+                                [mongoImg, "MongoDB"],
+                                [redisImg, "Redis"],
+                            ],
+                        },
+                        {
+                            title: "DevOps",
+                            skills: [
+                                [dockerImg, "Docker"],
+                                [ghaImg, "GitHub Actions"],
+                            ],
+                        },
+                    ].map((group) => (
+                        <div class="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4">
+                            <h3 class="font-semibold mb-3 text-neutral-800 dark:text-neutral-100">
+                                {group.title}
+                            </h3>
+                            <ul class="space-y-1 text-neutral-700 dark:text-neutral-300">
+                                {group.skills.map(([icon, label, id]) => (
+                                    <li class="flex items-center">
+                                        <img
+                                            src={icon.src}
+                                            alt={label}
+                                            class="w-5 h-5 mr-2"
+                                            id={id}
+                                        />{" "}
+                                        {label}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <h2
+                class="text-xl font-mono font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+            >
+                Projects
+            </h2>
+            <div class="grid sm:grid-cols-2 gap-6">
+                {
+                    [
+                        {
+                            img: mccImg,
+                            title: "MNNIT Chess Club",
+                            desc: "A chess server and frontend supporting PvP and tournaments.",
+                            link: "https://mnnitchessclub.com",
+                            text: "View Live →",
+                            id: "mcc",
+                        },
+                        {
+                            img: auraImg,
+                            title: "Aura Tracker",
+                            desc: "A web app for college interactivity.",
+                            link: "https://github.com/theAnuragMishra/aura-tracker",
+                            text: "View on GitHub →",
+                            id: "aura",
+                        },
+                        {
+                            img: mbImg,
+                            title: "MNNIT Buzz",
+                            desc: "A Reddit-like social app for MNNIT.",
+                            link: "https://mnnit-buzz.vercel.app",
+                            text: "View Live →",
+                            id: "mb",
+                        },
+                        {
+                            title: "cfgen",
+                            desc: "A Codeforces contest scraper automating setup.",
+                            link: "https://github.com/theAnuragMishra/cfgen",
+                            text: "View on GitHub →",
+                            id: "cfgen",
+                        },
+                    ].map((proj) => (
+                        <article class="border border-neutral-200 dark:border-neutral-700 rounded-xl p-5 flex flex-col justify-between">
+                            {proj.img && (
+                                <img
+                                    src={proj.img.src}
+                                    alt={proj.title}
+                                    class="w-10 h-10 mb-3 opacity-90"
+                                    id={proj.id}
+                                />
+                            )}
+                            <div>
+                                <h3 class="font-mono font-semibold mb-1 text-neutral-800 dark:text-neutral-100">
+                                    {proj.title}
+                                </h3>
+                                <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-3 leading-relaxed">
+                                    {proj.desc}
+                                </p>
+                            </div>
+                            <a
+                                href={proj.link}
+                                target="_blank"
+                                class="text-sm text-neutral-700 dark:text-neutral-300 hover:text-neutral-500 dark:hover:text-neutral-400"
+                            >
+                                {proj.text}
+                            </a>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="text-center space-y-4">
+            <h2
+                class="text-xl font-mono font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+            >
+                Contact
+            </h2>
+            <p class="text-neutral-700 dark:text-neutral-300">
+                Email me at
+                <a
+                    href="mailto:yoiam420@gmail.com"
+                    class="underline hover:text-neutral-500 dark:hover:text-neutral-400"
+                    >yoiam420@gmail.com</a
+                >
+            </p>
+            <div
+                class="flex justify-center items-center gap-6 text-sm text-neutral-600 dark:text-neutral-400"
+            >
+                <a href="https://github.com/theAnuragMishra" target="_blank"
+                    >GitHub</a
+                >
+                <a href="https://x.com/giuocopianosimp" target="_blank"
+                    >Twitter</a
+                >
+                <a
+                    href="https://www.linkedin.com/in/the-anurag-mishra/"
+                    target="_blank">LinkedIn</a
+                >
+            </div>
+        </section>
+    </div>
 </Layout>
+<style>
+    :global(.dark) #mcc,
+    :global(.dark) #aura,
+    :global(.dark) #express {
+        filter: invert(1);
+    }
+</style>

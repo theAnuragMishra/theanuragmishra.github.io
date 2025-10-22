@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/Layout.astro";
+---
+
+<BaseLayout
+    pageTitle="Page Not Found"
+    description="404 page for Anurag Kumar Mishra's personal website"
+>
+    <section
+        class="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
+    >
+        <h1 class="text-4xl md:text-5xl font-semibold mb-4">Oops!</h1>
+
+        <p class="text-neutral-600 dark:text-neutral-400 mb-8">
+            Looks like you’re lost — this page doesn’t exist.
+        </p>
+
+        <a
+            href="/"
+            class="px-6 py-3 border border-neutral-300 dark:border-neutral-700 rounded-md text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
+        >
+            ← Back to Home
+        </a>
+    </section>
+</BaseLayout>

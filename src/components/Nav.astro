@@ -1,0 +1,27 @@
+---
+const pathname = Astro.url.pathname;
+const highlight = (href: string) => {
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+};
+---
+
+<nav class="text-sm font-medium">
+    <ul class="flex flex-col md:flex-row md:justify-center text-center">
+        <li>
+            <a
+                href="/"
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/") ? "underline underline-offset-4" : ""}`}
+            >
+                Home
+            </a>
+        </li>
+        <li>
+            <a
+                href="/library"
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/library") ? "underline underline-offset-4" : ""}`}
+            >
+                Library
+            </a>
+        </li>
+    </ul>
+</nav>
