@@ -18,9 +18,18 @@ const highlight = (href: string) => {
         <li>
             <a
                 href="/blog"
-                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/library") ? "underline underline-offset-4" : ""}`}
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/blog") || highlight("/posts") ? "underline underline-offset-4" : ""}`}
             >
                 Blog
+            </a>
+        </li>
+
+        <li>
+            <a
+                href="/topics"
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/topics") ? "underline underline-offset-4" : ""}`}
+            >
+                Topics
             </a>
         </li>
     </ul>

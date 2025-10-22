@@ -19,7 +19,10 @@ let menuOpen = false;
         <!-- Right side: actions -->
         <div class="flex items-center gap-4">
             <ThemeToggle />
-            <button id="menu-toggle" class="md:hidden p-1">
+            <button
+                id="menu-toggle"
+                class="md:hidden p-1 rounded-lg border border-neutral-300 dark:border-neutral-700 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            >
                 <Image
                     src={hamburger}
                     alt="menu"
