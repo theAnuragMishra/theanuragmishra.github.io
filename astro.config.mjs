@@ -13,7 +13,17 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   site: "https://anurag-mishra.netlify.app",
-  integrations: [sitemap(), expressiveCode()],
+  integrations: [
+    sitemap(),
+    expressiveCode({
+      defaultProps: {
+        wrap: true,
+      },
+      styleOverrides: {
+        codeFontFamily: "'JetBrains Mono Variable', monospace",
+      },
+    }),
+  ],
   markdown: {
     remarkPlugins: [remarkDirective, remarkGithubAdmonitionsToDirectives],
   },
