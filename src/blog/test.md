@@ -2,6 +2,9 @@
 title: "test"
 pubDate: 2025-10-24
 description: "test blog"
+image:
+    url: ''
+    alt: ''
 topics: ["test"]
 ---
 

@@ -49,7 +49,7 @@ const topics = frontmatter.topics ?? [];
 
         <!-- Optional cover image -->
         {
-            frontmatter.image && (
+            frontmatter.image.url && (
                 <div class="my-8 flex justify-center">
                     <Image
                         src={frontmatter.image.url}
