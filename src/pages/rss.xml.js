@@ -1,8 +1,8 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
+import { getSortedPosts } from "../utils/content-utils";
 
 export async function GET(context) {
-  const posts = await getCollection("blog");
+  const posts = await getSortedPosts();
   return rss({
     title: "Anurag Mishra's blog",
     description: "A personal space where I share whatever I feel like",

@@ -48,6 +48,7 @@ image:
     url: ''
     alt: ''
 topics: []
+draft: true
 ---
 `;
 

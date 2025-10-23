@@ -6,6 +6,7 @@ image:
     url: ''
     alt: ''
 topics: ["movie review", "kantara"]
+draft: false
 ---
 Watched Kantara Chapter 1 in theatre on 18th. What a great movie! I usually like watching movies related to traditions, history, etc. This was one great movie with great vfx, action, dialogues and music. Rishabh has acted so well in the entire movie. The story took a bit of time to build, but the climax scenes were goated. Loved the movie.\
 (More detailed review coming soon, in this blog itself)

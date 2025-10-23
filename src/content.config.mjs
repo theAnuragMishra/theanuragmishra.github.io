@@ -16,6 +16,7 @@ const blog = defineCollection({
       })
       .optional(),
     topics: z.array(z.string()).optional(),
+    draft: z.boolean(),
   }),
 });
 // Export a single `collections` object to register your collection(s)
