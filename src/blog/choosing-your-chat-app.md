@@ -6,7 +6,7 @@ image:
     url: ''
     alt: ''
 topics: ['chat-apps', 'whatsapp', 'signal', 'telegram', 'tech']
-draft: true
+draft: false
 ---
 Hi folks! Meta is doing a lot of unnecessary things with Whatsapp. Most of us want a simple chat app with features just enough to make a good chatting experience. We don't want Meta AI, or public channels in Whatsapp. But these money mads don't care. Also recently Arattai (if I could spell it right) created a lot of hype, but let's ignore it because it's not end-to-end encrypted.\
 So what's this post about? I will talk about different chat apps that we can consider. And importantly, the different kinds of chat apps out there based on the techonology they use. For the rest of the article, I will use e2ee for "end-to-end encryption".\
