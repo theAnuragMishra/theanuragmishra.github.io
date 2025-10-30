@@ -12,7 +12,7 @@ Hi folks! Meta is doing a lot of unnecessary things with Whatsapp. Most of us wa
 So what's this post about? I will talk about different chat apps that we can consider. And importantly, the different kinds of chat apps out there based on the techonology they use. For the rest of the article, I will use e2ee for "end-to-end encryption".
 
 ### Types
-Chat apps can roughly be classified into two types: cloud messengers and well non-cloud messengers.\
+Chat apps can roughly be classified into two types: cloud messengers and well, non-cloud messengers.\
 __Cloud Messengers__: These are apps that store your messages in the cloud i.e., their servers. The most popular example is Telegram.\
 __Non-Cloud Messengers__: These are apps that only use their servers to transport your messages. They do not store your messages in their cloud or only store them for a very brief amount of time for transporting to the receiver correctlly (cases where the receiver could be offline at the time of sending). An example is- the very well known Whatsapp.
 ### So what's the difference?
