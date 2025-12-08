@@ -12,7 +12,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  site: "https://anurag-mishra.netlify.app",
+  site: "https://theanuragmishra.github.io",
   integrations: [
     sitemap(),
     expressiveCode({
