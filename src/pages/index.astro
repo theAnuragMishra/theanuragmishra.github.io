@@ -139,7 +139,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
                 Projects
             </h2>
 
-            <div class="grid md:grid-cols-2 gap-8">
+            <div class="grid md:grid-cols-2 gap-4 items-start">
                 {
                     [
                         {
@@ -166,9 +166,9 @@ import mbImg from "../assets/mnnit-buzz.webp";
                             id: "cfgen",
                         },
                     ].map((proj) => (
-                        <article class="group border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                        <article class="border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between">
                             {proj.img && (
-                                <div class="mb-4">
+                                <div class="mb-2">
                                     <img
                                         src={proj.img.src}
                                         alt={proj.title}
@@ -258,7 +258,6 @@ import mbImg from "../assets/mnnit-buzz.webp";
 </Layout>
 <style>
     :global(.dark) #mcc,
-    :global(.dark) #aura,
     :global(.dark) #express {
         filter: invert(1);
     }
