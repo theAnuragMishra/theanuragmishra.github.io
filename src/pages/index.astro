@@ -13,7 +13,6 @@ import pgImg from "../assets/postgres.svg";
 import redisImg from "../assets/redis.svg";
 import mongoImg from "../assets/mongodb.svg";
 import mccImg from "../assets/mcc-logo.webp";
-import auraImg from "../assets/aura.svg";
 import mbImg from "../assets/mnnit-buzz.webp";
 ---
 
@@ -74,32 +73,36 @@ import mbImg from "../assets/mnnit-buzz.webp";
                         {
                             title: "Frontend",
                             skills: [
-                                [svelteImg, "Svelte / Kit"],
-                                [reactImg, "React"],
-                                [nextImg, "Next.js"],
+                                { icon: svelteImg, label: "Svelte / Kit" },
+                                { icon: reactImg, label: "React" },
+                                { icon: nextImg, label: "Next.js" },
                             ],
                         },
                         {
                             title: "Backend",
                             skills: [
-                                [goImg, "Go"],
-                                [nodeImg, "Node.js"],
-                                [expressImg, "Express", "express"],
+                                { icon: goImg, label: "Go" },
+                                { icon: nodeImg, label: "Node.js" },
+                                {
+                                    icon: expressImg,
+                                    label: "Express",
+                                    id: "express",
+                                },
                             ],
                         },
                         {
                             title: "Database",
                             skills: [
-                                [pgImg, "PostgreSQL"],
-                                [mongoImg, "MongoDB"],
-                                [redisImg, "Redis"],
+                                { icon: pgImg, label: "PostgreSQL" },
+                                { icon: mongoImg, label: "MongoDB" },
+                                { icon: redisImg, label: "Redis" },
                             ],
                         },
                         {
                             title: "DevOps",
                             skills: [
-                                [dockerImg, "Docker"],
-                                [ghaImg, "GitHub Actions"],
+                                { icon: dockerImg, label: "Docker" },
+                                { icon: ghaImg, label: "GitHub Actions" },
                             ],
                         },
                     ].map((group) => (
@@ -109,11 +112,8 @@ import mbImg from "../assets/mnnit-buzz.webp";
                                 {group.title}
                             </h3>
                             <ul class="space-y-2 text-neutral-700 dark:text-neutral-300 ml-2">
-                                {group.skills.map(([icon, label, id]) => (
-                                    <li
-                                        key={label}
-                                        class="flex items-center gap-2 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                                    >
+                                {group.skills.map(({ icon, label, id }) => (
+                                    <li class="flex items-center gap-2 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
                                         <img
                                             src={icon.src}
                                             alt={label}
@@ -149,14 +149,6 @@ import mbImg from "../assets/mnnit-buzz.webp";
                             link: "https://mnnitchessclub.com",
                             text: "View Live →",
                             id: "mcc",
-                        },
-                        {
-                            img: auraImg,
-                            title: "Aura Tracker",
-                            desc: "A web app for college interactivity.",
-                            link: "https://github.com/theAnuragMishra/aura-tracker",
-                            text: "View on GitHub →",
-                            id: "aura",
                         },
                         {
                             img: mbImg,
