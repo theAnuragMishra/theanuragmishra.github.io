@@ -35,15 +35,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
             <Footer />
         </main>
-        <script>
-            document
-                .querySelector(".hamburger")
-                ?.addEventListener("click", () => {
-                    // console.log("hi");
-                    document
-                        .querySelector(".nav-links")
-                        ?.classList.toggle("expanded");
-                });
-        </script>
     </body>
 </html>
