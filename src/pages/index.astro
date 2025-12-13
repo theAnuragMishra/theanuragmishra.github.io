@@ -1,8 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import profileImg from "../assets/pfp.webp";
-import mccImg from "../assets/mcc-logo.webp";
-import mbImg from "../assets/mnnit-buzz.webp";
+import { getSortedPosts } from "../utils/content-utils";
+
+const allPosts = await getSortedPosts();
 ---
 
 <Layout
@@ -11,13 +12,13 @@ import mbImg from "../assets/mnnit-buzz.webp";
 >
     <div class="mx-auto px-4 pt-8 pb-6 space-y-8">
         <!-- INTRO -->
-        <section id="home" class="text-center space-y-4">
+        <section id="home" class="text-center">
             <img
                 src={profileImg.src}
                 alt="Profile"
-                class="mx-auto rounded-full w-32 h-32 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
+                class="mb-4 mx-auto rounded-full w-24 h-24 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
             />
-            <h1 class="text-2xl md:text-4xl font-semibold">
+            <h1 class="mb-2 text-2xl md:text-3xl font-semibold">
                 Anurag Kumar Mishra
             </h1>
             <p
@@ -28,6 +29,47 @@ import mbImg from "../assets/mnnit-buzz.webp";
                     href="https://www.youtube.com/@ashreyl">@aashreyan</a
                 > sing.
             </p>
+        </section>
+
+        <!-- Writings -->
+        <section id="writings">
+            <h2
+                class="flex justify-between text-2xl font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
+            >
+                <span>Writings</span>
+                <a class="text-sm flex items-end" href="/blog">View all</a>
+            </h2>
+            <ul class="space-y-6">
+                {
+                    allPosts.splice(0, 2).map((post) => (
+                        <li>
+                            <a href={`/posts/${post.id}/`} class="block group">
+                                <h2 class="text-xl font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
+                                    {post.data.title}
+                                </h2>
+
+                                {post.data.description && (
+                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                                        {post.data.description}
+                                    </p>
+                                )}
+
+                                {post.data.pubDate && (
+                                    <p class="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
+                                        {new Date(
+                                            post.data.pubDate,
+                                        ).toLocaleDateString(undefined, {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                        })}
+                                    </p>
+                                )}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
         </section>
 
         <!-- PROJECTS -->
@@ -44,18 +86,14 @@ import mbImg from "../assets/mnnit-buzz.webp";
                 {
                     [
                         {
-                            img: mccImg,
                             title: "mnnitchessclub.com",
                             desc: "A chess server and frontend supporting PvP and tournaments.",
                             link: "https://mnnitchessclub.com",
-                            id: "mcc",
                         },
                         {
-                            img: mbImg,
                             title: "MNNIT Buzz",
                             desc: "A Reddit-like social app for MNNIT.",
                             link: "https://mnnit-buzz.vercel.app",
-                            id: "mb",
                         },
                     ].map((proj) => (
                         <a
@@ -79,16 +117,6 @@ import mbImg from "../assets/mnnit-buzz.webp";
                                     />
                                 </svg>
                             </div>
-                            {proj.img && (
-                                <div class="mb-2">
-                                    <img
-                                        src={proj.img.src}
-                                        alt={proj.title}
-                                        class="h-12 rounded-md opacity-90 group-hover:opacity-100 transition-opacity"
-                                        id={proj.id}
-                                    />
-                                </div>
-                            )}
 
                             <div class="flex-1">
                                 <h3 class="font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
@@ -182,8 +210,3 @@ import mbImg from "../assets/mnnit-buzz.webp";
         </section>
     </div>
 </Layout>
-<style>
-    :global(.dark) #mcc {
-        filter: invert(1);
-    }
-</style>
