@@ -17,7 +17,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
 ---
 
 <Layout pageTitle="Anurag Mishra">
-    <div class="max-w-3xl mx-auto px-4 pt-12 pb-6 space-y-8">
+    <div class="max-w-3xl mx-auto px-4 pt-8 pb-6 space-y-8">
         <!-- INTRO -->
         <section id="home" class="text-center space-y-4">
             <img
@@ -29,10 +29,86 @@ import mbImg from "../assets/mnnit-buzz.webp";
                 Anurag Kumar Mishra
             </h1>
             <p
-                class="text-neutral-600 dark:text-neutral-400 text-sm md:text-base"
+                class="text-center text-neutral-600 dark:text-neutral-400 text-sm md:text-base"
             >
-                India-based Programmer & Chessy
+                I love to play chess, travel and listen to <a
+                    class="text-black dark:text-white decoration-dashed underline decoration-[1.5px]"
+                    href="https://www.youtube.com/@ashreyl">@aashreyan</a
+                > sing.
             </p>
+        </section>
+
+        <!-- PROJECTS -->
+
+        <section id="projects">
+            <h2
+                class="text-2xl font-mono font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
+            >
+                Projects
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-4 items-start">
+                {
+                    [
+                        {
+                            img: mccImg,
+                            title: "mnnitchessclub.com",
+                            desc: "A chess server and frontend supporting PvP and tournaments.",
+                            link: "https://mnnitchessclub.com",
+                            id: "mcc",
+                        },
+                        {
+                            img: mbImg,
+                            title: "MNNIT Buzz",
+                            desc: "A Reddit-like social app for MNNIT.",
+                            link: "https://mnnit-buzz.vercel.app",
+                            id: "mb",
+                        },
+                    ].map((proj) => (
+                        <a
+                            href={proj.link}
+                            class="group relative border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
+                        >
+                            <div class="absolute top-5.5 right-5.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M7 7h10m0 0v10m0-10L7 17"
+                                        stroke-width="1"
+                                    />
+                                </svg>
+                            </div>
+                            {proj.img && (
+                                <div class="mb-2">
+                                    <img
+                                        src={proj.img.src}
+                                        alt={proj.title}
+                                        class="h-12 rounded-md shadow-sm opacity-90 group-hover:opacity-100 transition-opacity"
+                                        id={proj.id}
+                                    />
+                                </div>
+                            )}
+
+                            <div class="flex-1">
+                                <h3 class="font-mono font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
+                                    {proj.title}
+                                </h3>
+                                <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed ">
+                                    {proj.desc}
+                                </p>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
         </section>
 
         <!-- EDUCATION -->
@@ -125,79 +201,6 @@ import mbImg from "../assets/mnnit-buzz.webp";
                                 ))}
                             </ul>
                         </div>
-                    ))
-                }
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-
-        <section id="projects">
-            <h2
-                class="text-2xl font-mono font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
-            >
-                Projects
-            </h2>
-
-            <div class="grid md:grid-cols-2 gap-4 items-start">
-                {
-                    [
-                        {
-                            img: mccImg,
-                            title: "mnnitchessclub.com",
-                            desc: "A chess server and frontend supporting PvP and tournaments.",
-                            link: "https://mnnitchessclub.com",
-                            id: "mcc",
-                        },
-                        {
-                            img: mbImg,
-                            title: "MNNIT Buzz",
-                            desc: "A Reddit-like social app for MNNIT.",
-                            link: "https://mnnit-buzz.vercel.app",
-                            id: "mb",
-                        },
-                    ].map((proj) => (
-                        <a
-                            href={proj.link}
-                            class="group relative border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
-                        >
-                            <div class="absolute top-5.5 right-5.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M7 7h10m0 0v10m0-10L7 17"
-                                        stroke-width="1"
-                                    />
-                                </svg>
-                            </div>
-                            {proj.img && (
-                                <div class="mb-2">
-                                    <img
-                                        src={proj.img.src}
-                                        alt={proj.title}
-                                        class="h-12 rounded-md shadow-sm opacity-90 group-hover:opacity-100 transition-opacity"
-                                        id={proj.id}
-                                    />
-                                </div>
-                            )}
-
-                            <div class="flex-1">
-                                <h3 class="font-mono font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
-                                    {proj.title}
-                                </h3>
-                                <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed ">
-                                    {proj.desc}
-                                </p>
-                            </div>
-                        </a>
                     ))
                 }
             </div>
