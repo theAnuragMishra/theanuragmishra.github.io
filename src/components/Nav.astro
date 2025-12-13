@@ -9,21 +9,20 @@ const highlight = (href: string) => {
     <ul class="flex flex-col md:flex-row md:justify-center text-center">
         <li>
             <a
-                href="/projects"
-                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/projects") ? "" : ""}`}
-            >
-                Projects
-            </a>
-        </li>
-        <li>
-            <a
                 href="/blog"
                 class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/blog") || highlight("/posts") ? "" : ""}`}
             >
                 Blog
             </a>
         </li>
-
+        <li>
+            <a
+                href="/projects"
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/projects") ? "" : ""}`}
+            >
+                Projects
+            </a>
+        </li>
         <li>
             <a
                 href="/topics"

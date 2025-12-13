@@ -5,8 +5,11 @@ import mccImg from "../assets/mcc-logo.webp";
 import mbImg from "../assets/mnnit-buzz.webp";
 ---
 
-<Layout pageTitle="Anurag Mishra">
-    <div class="max-w-3xl mx-auto px-4 pt-8 pb-6 space-y-8">
+<Layout
+    pageTitle="Anurag Mishra"
+    description="Anurag Mishra's space on the web. Find his projects and blogs here!"
+>
+    <div class="mx-auto px-4 pt-8 pb-6 space-y-8">
         <!-- INTRO -->
         <section id="home" class="text-center space-y-4">
             <img
@@ -14,7 +17,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
                 alt="Profile"
                 class="mx-auto rounded-full w-32 h-32 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
             />
-            <h1 class="text-2xl md:text-4xl font-mono font-semibold">
+            <h1 class="text-2xl md:text-4xl font-semibold">
                 Anurag Kumar Mishra
             </h1>
             <p
@@ -31,9 +34,10 @@ import mbImg from "../assets/mnnit-buzz.webp";
 
         <section id="projects">
             <h2
-                class="text-2xl font-mono font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
+                class="flex justify-between text-2xl font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
             >
-                Projects
+                <span>Projects</span>
+                <a class="text-sm flex items-end" href="/projects">View all</a>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-4 items-start">
@@ -80,14 +84,14 @@ import mbImg from "../assets/mnnit-buzz.webp";
                                     <img
                                         src={proj.img.src}
                                         alt={proj.title}
-                                        class="h-12 rounded-md shadow-sm opacity-90 group-hover:opacity-100 transition-opacity"
+                                        class="h-12 rounded-md opacity-90 group-hover:opacity-100 transition-opacity"
                                         id={proj.id}
                                     />
                                 </div>
                             )}
 
                             <div class="flex-1">
-                                <h3 class="font-mono font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
+                                <h3 class="font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
                                     {proj.title}
                                 </h3>
                                 <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed ">
@@ -103,7 +107,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
         <!-- EDUCATION -->
         <section id="education">
             <h2
-                class="text-xl font-mono font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+                class="text-xl font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
             >
                 Education
             </h2>
@@ -130,7 +134,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
             class="text-center flex flex-col items-center space-y-4"
         >
             <h2
-                class="text-2xl font-mono font-semibold border-b border-neutral-300 dark:border-neutral-700 pb-3 mb-2 tracking-tight"
+                class="text-2xl font-semibold border-b border-neutral-300 dark:border-neutral-700 pb-3 mb-2 tracking-tight"
             >
                 Get In Touch
             </h2>
@@ -179,8 +183,7 @@ import mbImg from "../assets/mnnit-buzz.webp";
     </div>
 </Layout>
 <style>
-    :global(.dark) #mcc,
-    :global(.dark) #express {
+    :global(.dark) #mcc {
         filter: invert(1);
     }
 </style>
