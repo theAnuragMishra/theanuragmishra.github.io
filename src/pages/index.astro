@@ -10,15 +10,15 @@ const allPosts = await getSortedPosts();
     pageTitle="Anurag Mishra"
     description="Anurag Mishra's space on the web. Find his projects and blogs here!"
 >
-    <div class="mx-auto px-4 pt-8 pb-6 space-y-8">
+    <div class="mx-auto px-4 py-12 space-y-16">
         <!-- INTRO -->
-        <section id="home" class="text-center">
+        <section id="home" class="text-center space-y-4">
             <img
                 src={profileImg.src}
                 alt="Profile"
-                class="mb-4 mx-auto rounded-full w-24 h-24 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
+                class="mx-auto rounded-full w-24 h-24 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
             />
-            <h1 class="mb-2 text-2xl md:text-3xl font-semibold">
+            <h1 class="text-2xl md:text-3xl font-semibold">
                 Anurag Kumar Mishra
             </h1>
             <p
@@ -31,12 +31,12 @@ const allPosts = await getSortedPosts();
             </p>
         </section>
 
-        <!-- Writings -->
-        <section id="writings">
+        <!-- Writing -->
+        <section id="writing">
             <h2
-                class="flex justify-between text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-300 dark:border-neutral-700 pb-2 tracking-tight"
+                class="flex justify-between text-2xl font-semibold mb-6 tracking-tight"
             >
-                <span>Writings</span>
+                <span>Writing</span>
                 <a class="text-sm flex items-end" href="/blog">View all</a>
             </h2>
             <ul class="space-y-3">
@@ -47,7 +47,7 @@ const allPosts = await getSortedPosts();
                                 href={`/posts/${post.id}/`}
                                 class="flex justify-between group"
                             >
-                                <h2 class="w-4/5 md:text-xl font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
+                                <h2 class="w-4/5 font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
                                     {post.data.title}
                                 </h2>
 
@@ -73,7 +73,7 @@ const allPosts = await getSortedPosts();
 
         <section id="projects">
             <h2
-                class="flex justify-between text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-300 dark:border-neutral-700 pb-2 tracking-tight"
+                class="flex justify-between text-2xl font-semibold mb-6 tracking-tight"
             >
                 <span>Projects</span>
                 <a class="text-sm flex items-end" href="/projects">View all</a>
@@ -131,11 +131,7 @@ const allPosts = await getSortedPosts();
 
         <!-- EDUCATION -->
         <section id="education">
-            <h2
-                class="text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
-            >
-                Education
-            </h2>
+            <h2 class="text-2xl font-semibold mb-6">Education</h2>
             <ul class="space-y-2 text-neutral-700 dark:text-neutral-300">
                 <li class="flex justify-between text-sm md:text-base">
                     <span>B.Tech., MNNIT Allahabad</span>
@@ -159,7 +155,7 @@ const allPosts = await getSortedPosts();
             class="text-center flex flex-col items-center space-y-4"
         >
             <h2
-                class="text-2xl font-semibold border-b border-neutral-300 dark:border-neutral-700 pb-3 mb-2 tracking-tight"
+                class="text-xl md:text-2xl font-semibold border-b border-neutral-300 dark:border-neutral-700 pb-1 md:pb-2 mb-2 tracking-tight"
             >
                 Get In Touch
             </h2>
@@ -167,7 +163,7 @@ const allPosts = await getSortedPosts();
             <p
                 class="text-neutral-700 dark:text-neutral-300 max-w-md leading-relaxed"
             >
-                Reach out at
+                My inbox is always open at
                 <a
                     href="mailto:yoiam420@gmail.com"
                     class="ml-1 underline decoration-neutral-400 dark:decoration-neutral-600 underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
