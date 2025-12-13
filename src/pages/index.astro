@@ -34,34 +34,31 @@ const allPosts = await getSortedPosts();
         <!-- Writings -->
         <section id="writings">
             <h2
-                class="flex justify-between text-2xl font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
+                class="flex justify-between text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-300 dark:border-neutral-700 pb-2 tracking-tight"
             >
                 <span>Writings</span>
                 <a class="text-sm flex items-end" href="/blog">View all</a>
             </h2>
-            <ul class="space-y-6">
+            <ul class="space-y-3">
                 {
                     allPosts.splice(0, 2).map((post) => (
                         <li>
-                            <a href={`/posts/${post.id}/`} class="block group">
-                                <h2 class="text-xl font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
+                            <a
+                                href={`/posts/${post.id}/`}
+                                class="flex justify-between group"
+                            >
+                                <h2 class="w-4/5 md:text-xl font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
                                     {post.data.title}
                                 </h2>
 
-                                {post.data.description && (
-                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
-                                        {post.data.description}
-                                    </p>
-                                )}
-
                                 {post.data.pubDate && (
-                                    <p class="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
+                                    <p class="text-right text-sm mt-1">
                                         {new Date(
                                             post.data.pubDate,
-                                        ).toLocaleDateString(undefined, {
-                                            year: "numeric",
-                                            month: "short",
-                                            day: "numeric",
+                                        ).toLocaleDateString("en-GB", {
+                                            year: "2-digit",
+                                            month: "2-digit",
+                                            day: "2-digit",
                                         })}
                                     </p>
                                 )}
@@ -76,7 +73,7 @@ const allPosts = await getSortedPosts();
 
         <section id="projects">
             <h2
-                class="flex justify-between text-2xl font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
+                class="flex justify-between text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-300 dark:border-neutral-700 pb-2 tracking-tight"
             >
                 <span>Projects</span>
                 <a class="text-sm flex items-end" href="/projects">View all</a>
@@ -98,7 +95,7 @@ const allPosts = await getSortedPosts();
                     ].map((proj) => (
                         <a
                             href={proj.link}
-                            class="group relative border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
+                            class="group relative border border-neutral-200 dark:border-neutral-800 rounded-2xl px-6 py-4 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
                         >
                             <div class="absolute top-5.5 right-5.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                                 <svg
@@ -135,7 +132,7 @@ const allPosts = await getSortedPosts();
         <!-- EDUCATION -->
         <section id="education">
             <h2
-                class="text-xl font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
+                class="text-xl md:text-2xl font-semibold mb-4 border-b border-neutral-200 dark:border-neutral-700 pb-2"
             >
                 Education
             </h2>
