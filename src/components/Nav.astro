@@ -9,16 +9,16 @@ const highlight = (href: string) => {
     <ul class="flex flex-col md:flex-row md:justify-center text-center">
         <li>
             <a
-                href="/"
-                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/") ? "underline underline-offset-4" : ""}`}
+                href="/projects"
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/projects") ? "" : ""}`}
             >
-                Home
+                Projects
             </a>
         </li>
         <li>
             <a
                 href="/blog"
-                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/blog") || highlight("/posts") ? "underline underline-offset-4" : ""}`}
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/blog") || highlight("/posts") ? "" : ""}`}
             >
                 Blog
             </a>
@@ -27,7 +27,7 @@ const highlight = (href: string) => {
         <li>
             <a
                 href="/topics"
-                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/topics") ? "underline underline-offset-4" : ""}`}
+                class={`block px-4 py-2 transition-colors hover:text-neutral-500 ${highlight("/topics") ? "" : ""}`}
             >
                 Topics
             </a>

@@ -1,17 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import profileImg from "../assets/pfp.webp";
-import svelteImg from "../assets/svelte.svg";
-import reactImg from "../assets/react.svg";
-import nextImg from "../assets/next.svg";
-import dockerImg from "../assets/docker.svg";
-import ghaImg from "../assets/gha.svg";
-import goImg from "../assets/go.svg";
-import expressImg from "../assets/express.svg";
-import nodeImg from "../assets/node.svg";
-import pgImg from "../assets/postgres.svg";
-import redisImg from "../assets/redis.svg";
-import mongoImg from "../assets/mongodb.svg";
 import mccImg from "../assets/mcc-logo.webp";
 import mbImg from "../assets/mnnit-buzz.webp";
 ---
@@ -132,78 +121,6 @@ import mbImg from "../assets/mnnit-buzz.webp";
                     <i>2021</i>
                 </li>
             </ul>
-        </section>
-
-        <!-- SKILLS -->
-
-        <section id="skills">
-            <h2
-                class="text-2xl font-mono font-semibold mb-8 border-b border-neutral-300 dark:border-neutral-700 pb-3 tracking-tight"
-            >
-                Technical Skills
-            </h2>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {
-                    [
-                        {
-                            title: "Frontend",
-                            skills: [
-                                { icon: svelteImg, label: "Svelte / Kit" },
-                                { icon: reactImg, label: "React" },
-                                { icon: nextImg, label: "Next.js" },
-                            ],
-                        },
-                        {
-                            title: "Backend",
-                            skills: [
-                                { icon: goImg, label: "Go" },
-                                { icon: nodeImg, label: "Node.js" },
-                                {
-                                    icon: expressImg,
-                                    label: "Express",
-                                    id: "express",
-                                },
-                            ],
-                        },
-                        {
-                            title: "Database",
-                            skills: [
-                                { icon: pgImg, label: "PostgreSQL" },
-                                { icon: mongoImg, label: "MongoDB" },
-                                { icon: redisImg, label: "Redis" },
-                            ],
-                        },
-                        {
-                            title: "DevOps",
-                            skills: [
-                                { icon: dockerImg, label: "Docker" },
-                                { icon: ghaImg, label: "GitHub Actions" },
-                            ],
-                        },
-                    ].map((group) => (
-                        <div class="group border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 bg-neutral-50/50 dark:bg-neutral-900/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <h3 class="font-semibold mb-4 text-neutral-800 dark:text-neutral-100 text-lg flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 bg-gray-500 rounded-full" />
-                                {group.title}
-                            </h3>
-                            <ul class="space-y-2 text-neutral-700 dark:text-neutral-300 ml-2">
-                                {group.skills.map(({ icon, label, id }) => (
-                                    <li class="flex items-center gap-2 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
-                                        <img
-                                            src={icon.src}
-                                            alt={label}
-                                            class="w-5 h-5 opacity-80 group-hover:opacity-100 transition-opacity"
-                                            id={id}
-                                        />
-                                        <span class="text-sm">{label}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))
-                }
-            </div>
         </section>
 
         <!-- CONTACT -->
