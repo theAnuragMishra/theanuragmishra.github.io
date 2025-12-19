@@ -12,10 +12,8 @@ const highlight = (href: string) => {
     class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur supports-backdrop-filter:bg-opacity-60"
 >
     <nav class="mx-auto flex items-center justify-between p-4">
-        <!-- Left side: site title -->
         <a href="/" class={`text-lg font-semibold tracking-tight`}> anurag. </a>
 
-        <!-- Right side: actions -->
         <div class="flex items-center gap-2">
             <ThemeToggle />
             <button
@@ -36,16 +34,8 @@ const highlight = (href: string) => {
         </div>
     </nav>
 
-    <!-- Mobile navigation -->
     <div
         id="mobile-nav"
-        class="md:hidden border-t border-neutral-200 dark:border-neutral-800 hidden"
-    >
-        <Nav />
-    </div>
-
-    <!-- Desktop navigation -->
-    <div
         class="hidden md:block border-t border-neutral-200 dark:border-neutral-800"
     >
         <Nav />
