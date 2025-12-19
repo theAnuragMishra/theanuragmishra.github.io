@@ -12,8 +12,10 @@ const highlight = (href: string) => {
     class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur supports-backdrop-filter:bg-opacity-60"
 >
     <nav class="mx-auto flex items-center justify-between p-4">
+        <!-- Left side: site title -->
         <a href="/" class={`text-lg font-semibold tracking-tight`}> anurag. </a>
 
+        <!-- Right side: actions -->
         <div class="flex items-center gap-2">
             <ThemeToggle />
             <button
@@ -34,8 +36,27 @@ const highlight = (href: string) => {
         </div>
     </nav>
 
+    <!-- Mobile navigation -->
+
     <div
         id="mobile-nav"
+        class="fixed inset-0 z-50 hidden md:hidden w-screen h-screen items-center justify-center"
+    >
+        <!-- Backdrop -->
+        <div
+            id="mobile-backdrop"
+            class="absolute inset-0 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-3xl w-full h-full"
+        >
+        </div>
+
+        <!-- Centered nav -->
+        <div class="relative z-10 flex items-center justify-center">
+            <Nav />
+        </div>
+    </div>
+
+    <!-- Desktop navigation -->
+    <div
         class="hidden md:block border-t border-neutral-200 dark:border-neutral-800"
     >
         <Nav />
@@ -45,7 +66,20 @@ const highlight = (href: string) => {
 <script is:inline>
     const toggle = document.getElementById("menu-toggle");
     const mobileNav = document.getElementById("mobile-nav");
+    const backdrop = document.getElementById("mobile-backdrop");
+
     toggle?.addEventListener("click", () => {
-        mobileNav?.classList.toggle("hidden");
+        if (mobileNav.classList.contains("hidden")) {
+            mobileNav?.classList.remove("hidden");
+            mobileNav?.classList.add("flex");
+        } else {
+            mobileNav?.classList.add("hidden");
+            mobileNav?.classList.remove("flex");
+        }
+    });
+
+    backdrop?.addEventListener("click", () => {
+        mobileNav?.classList.add("hidden");
+        mobileNav?.classList.remove("flex");
     });
 </script>
