@@ -1,205 +1,58 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import profileImg from "../assets/pfp.webp";
-import { getSortedPosts } from "../utils/content-utils";
-
-const allPosts = await getSortedPosts();
 ---
 
 <Layout
     pageTitle="Anurag Mishra"
-    description="Anurag Mishra's space on the web. Find his projects and blogs here!"
+    description="My space on the web! I write stuff here!"
 >
-    <div class="mx-auto px-4 py-12 space-y-16">
-        <!-- INTRO -->
+    <div class="mx-auto px-4 py-12 space-y-4">
         <section id="home" class="text-center space-y-4">
             <img
                 src={profileImg.src}
                 alt="Profile"
                 class="mx-auto rounded-full w-24 h-24 object-cover ring-1 ring-neutral-300 dark:ring-neutral-700"
             />
-            <h1 class="text-2xl md:text-3xl font-semibold">
+            <h1
+                class="text-black dark:text-white text-2xl md:text-3xl font-semibold"
+            >
                 Anurag Kumar Mishra
             </h1>
-            <p
-                class="text-center text-neutral-600 dark:text-neutral-400 text-sm md:text-base"
-            >
-                I love to play chess, travel and listen to <a
-                    class="text-black dark:text-white decoration-dashed underline decoration-[1.5px]"
-                    href="https://www.youtube.com/@ashreyl">@aashreyan</a
-                > sing.
-            </p>
         </section>
 
-        <!-- Writing -->
-        <section id="writing">
-            <h2
-                class="flex justify-between text-2xl font-semibold mb-6 tracking-tight"
-            >
-                <span>Writing</span>
-                <a class="text-sm flex items-end" href="/blog">View all</a>
-            </h2>
-            <ul class="space-y-3">
-                {
-                    allPosts.splice(0, 2).map((post) => (
-                        <li>
-                            <a
-                                href={`/posts/${post.id}/`}
-                                class="flex justify-between group"
-                            >
-                                <h2 class="w-4/5 font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-500 transition-colors">
-                                    {post.data.title}
-                                </h2>
-
-                                {post.data.pubDate && (
-                                    <p class="text-right text-sm mt-1">
-                                        {new Date(
-                                            post.data.pubDate,
-                                        ).toLocaleDateString("en-GB", {
-                                            year: "2-digit",
-                                            month: "2-digit",
-                                            day: "2-digit",
-                                        })}
-                                    </p>
-                                )}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </section>
-
-        <!-- PROJECTS -->
-
-        <section id="projects">
-            <h2
-                class="flex justify-between text-2xl font-semibold mb-6 tracking-tight"
-            >
-                <span>Projects</span>
-                <a class="text-sm flex items-end" href="/projects">View all</a>
-            </h2>
-
-            <div class="grid md:grid-cols-2 gap-4 items-start">
-                {
-                    [
-                        {
-                            title: "mnnitchessclub.com",
-                            desc: "A chess server and frontend supporting PvP and tournaments.",
-                            link: "https://mnnitchessclub.com",
-                        },
-                        {
-                            title: "MNNIT Buzz",
-                            desc: "A Reddit-like social app for MNNIT.",
-                            link: "https://mnnit-buzz.vercel.app",
-                        },
-                    ].map((proj) => (
-                        <a
-                            href={proj.link}
-                            class="group relative border border-neutral-200 dark:border-neutral-800 rounded-2xl px-6 py-4 bg-neutral-50/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
-                        >
-                            <div class="absolute top-5.5 right-5.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M7 7h10m0 0v10m0-10L7 17"
-                                        stroke-width="1"
-                                    />
-                                </svg>
-                            </div>
-
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-lg text-neutral-800 dark:text-neutral-100 mb-2 group-hover:text-neutral-900 dark:group-hover:text-neutral-50 transition-colors">
-                                    {proj.title}
-                                </h3>
-                                <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed ">
-                                    {proj.desc}
-                                </p>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
-        </section>
-
-        <!-- EDUCATION -->
-        <section id="education">
-            <h2 class="text-2xl font-semibold mb-6">Education</h2>
-            <ul class="space-y-2 text-neutral-700 dark:text-neutral-300">
-                <li class="flex justify-between text-sm md:text-base">
-                    <span>B.Tech., MNNIT Allahabad</span>
-                    <i>2023–2027</i>
-                </li>
-                <li class="flex justify-between text-sm md:text-base">
-                    <span>12th, Lord Buddha Public School</span>
-                    <i>2023</i>
-                </li>
-                <li class="flex justify-between text-sm md:text-base">
-                    <span>10th, Lord Buddha Public School</span>
-                    <i>2021</i>
-                </li>
-            </ul>
-        </section>
-
-        <!-- CONTACT -->
-
-        <section
-            id="contact"
-            class="text-center flex flex-col items-center space-y-4"
-        >
-            <h2
-                class="text-xl md:text-2xl font-semibold border-b border-neutral-300 dark:border-neutral-700 pb-1 md:pb-2 mb-2 tracking-tight"
-            >
-                Get In Touch
-            </h2>
-
-            <p
-                class="text-neutral-700 dark:text-neutral-300 max-w-md leading-relaxed"
-            >
-                My inbox is always open at
-                <a
-                    href="mailto:yoiam420@gmail.com"
-                    class="ml-1 underline decoration-neutral-400 dark:decoration-neutral-600 underline-offset-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                    yoiam420@gmail.com
-                </a>
-            </p>
-
-            <div
-                class="flex flex-wrap justify-center items-center gap-6 text-sm text-neutral-600 dark:text-neutral-400"
-            >
+        <p class="">
+            I love to play chess, travel and listen to <a
+                class="text-black dark:text-white"
+                href="https://www.youtube.com/@ashreyl">[aashreyan]</a
+            > sing. Many things capture my interest, and this website shows some of
+            them.
+        </p>
+        <section>
+            <p class="">
+                Reach out: <a href="mailto:yoiam420@gmail.com" class="ml-1">
+                    [yoiam420@gmail.com]
+                </a> or @anuragam on Discord
+                <br />
+                Find me:&nbsp;&nbsp;&nbsp;
                 <a
                     href="https://github.com/theAnuragMishra"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                >
-                    GitHub
-                </a>
+                    rel="noopener noreferrer">[GitHub]</a
+                >&nbsp;&nbsp;&nbsp;
                 <a
                     href="https://x.com/giuocopianosimp"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                >
-                    Twitter
-                </a>
+                    rel="noopener noreferrer">[Twitter]</a
+                >&nbsp;&nbsp;&nbsp;
                 <a
                     href="https://www.linkedin.com/in/the-anurag-mishra/"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                >
-                    LinkedIn
-                </a>
-            </div>
+                    rel="noopener noreferrer">[LinkedIn]</a
+                >&nbsp;&nbsp;&nbsp;
+            </p>
         </section>
     </div>
 </Layout>
+
+<style></style>

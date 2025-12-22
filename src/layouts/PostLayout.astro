@@ -2,67 +2,46 @@
 import BaseLayout from "./Layout.astro";
 import { Image } from "astro:assets";
 const { frontmatter } = Astro.props;
-const topics = frontmatter.topics ?? [];
 ---
 
 <BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
     <article class="mx-auto px-4 py-12">
         <!-- Post header -->
         <header class="mb-8">
-            <h1 class="text-3xl md:text-4xl font-semibold tracking-tight mb-2">
+            <h1 class="text-center text-3xl md:text-4xl font-extrabold mb-2">
                 {frontmatter.title}
             </h1>
 
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            <p
+                class="text-center text-sm text-neutral-500 dark:text-neutral-400"
+            >
                 {
-                    frontmatter.pubDate.toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
+                    frontmatter.pubDate.toLocaleDateString("en-GB", {
+                        year: "2-digit",
+                        month: "2-digit",
+                        day: "2-digit",
                     })
                 }
             </p>
-
-            {
-                frontmatter.description && (
-                    <p class="mt-2 text-neutral-600 dark:text-neutral-400 italic">
-                        {frontmatter.description}
-                    </p>
-                )
-            }
-
-            {
-                topics.length > 0 && (
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        {topics.map((topic: string) => (
-                            <a
-                                href={`/topics/${topic}`}
-                                class="border border-neutral-300 dark:border-neutral-700 rounded-full px-3 py-1 text-sm text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-                            >
-                                #{topic}
-                            </a>
-                        ))}
-                    </div>
-                )
-            }
         </header>
 
         <!-- Optional cover image -->
         {
-            frontmatter.image.url && (
+            frontmatter.cover.url && (
                 <div class="my-8 flex justify-center">
                     <Image
-                        src={frontmatter.image.url}
-                        alt={frontmatter.image.alt}
+                        src={frontmatter.cover.url}
+                        alt={frontmatter.cover.alt}
                         width={700}
-                        class="rounded-xl border border-neutral-200 dark:border-neutral-800"
+                        height={300}
+                        class="border border-neutral-200 dark:border-neutral-800"
                     />
                 </div>
             )
         }
 
         <!-- Main content -->
-        <div class="prose prose-neutral dark:prose-invert max-w-none">
+        <div class="prose prose-gray lg:prose-lg dark:prose-invert max-w-none">
             <slot />
         </div>
     </article>

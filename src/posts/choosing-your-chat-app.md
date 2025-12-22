@@ -1,14 +1,14 @@
 ---
 title: Choosing Your Chat App
 pubDate: 2025-10-24
-description: 'Talking a bit about different chat apps and the techonologies they use. With so many options, understanding which is the best for your privacy and experience is important.'
-image:
+description: 'In a world of data hungry companies, it is really important to care about your chat privacy. I talk about the different options available.'
+cover:
     url: ''
     alt: ''
-topics: ['chat-apps', 'whatsapp', 'signal', 'telegram', 'tech']
+category: 'tech'
 draft: false
 ---
-Hi folks! Meta is doing a lot of unnecessary things with Whatsapp. Most of us want a simple chat app with features just enough to make a good chatting experience. We don't want Meta AI, or public channels in Whatsapp. But these money mads don't care. Also recently Arattai (if I could spell it right) created a lot of hype, but let's ignore it because it's not end-to-end encrypted.\
+Meta is doing a lot of unnecessary things with Whatsapp. Most of us want a simple chat app with features just enough to make a good chatting experience. We don't want Meta AI, or public channels in Whatsapp. But these money mads don't care. Also recently Arattai (if I could spell it right) created a lot of hype, but let's ignore it because it's not end-to-end encrypted.\
 So what's this post about? I will talk about different chat apps that we can consider. And importantly, the different kinds of chat apps out there based on the techonology they use. For the rest of the article, I will use e2ee for "end-to-end encryption".
 
 ### Types

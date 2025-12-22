@@ -2,15 +2,19 @@
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-    scroll-behavior: smooth;
-    font-family: "Inter Variable", sans-serif;
+@layer base {
+    body {
+        line-height: 1.8;
+    }
 }
 
-h1,
-h2,
-h3 {
-    font-family: "Roboto Mono", monospace;
+html {
+    scroll-behavior: smooth;
+    font-family: "IBM Plex Serif", serif;
+}
+
+h1 {
+    font-family: "Red Hat Display Variable", sans-serif;
 }
 
 a {
@@ -18,7 +22,11 @@ a {
 }
 
 a:hover {
-    opacity: 0.7;
+    background-color: var(--color-neutral-200);
+}
+
+.dark a:hover {
+    background-color: var(--color-neutral-800);
 }
 
 section {

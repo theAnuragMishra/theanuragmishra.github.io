@@ -26,7 +26,7 @@ if (!fileExtensionRegex.test(fileName)) {
   fileName += ".md";
 }
 
-const targetDir = "./src/blog/";
+const targetDir = "./src/posts/";
 const fullPath = path.join(targetDir, fileName);
 
 if (fs.existsSync(fullPath)) {
@@ -44,10 +44,10 @@ const content = `---
 title: ${args[0]}
 pubDate: ${getDate()}
 description: ''
-image:
+cover:
     url: ''
     alt: ''
-topics: []
+category: ''
 draft: true
 ---
 `;

@@ -1,8 +1,9 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import "@fontsource-variable/inter";
+import "@fontsource-variable/red-hat-display";
 import "@fontsource-variable/jetbrains-mono";
+import "@fontsource/ibm-plex-serif";
 import "../styles/global.css";
 const { pageTitle, description } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -17,7 +18,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <link
             rel="alternate"
             type="application/rss+xml"
-            title={"Anurag Mishra's Blog"}
+            title={"Anurag Mishra"}
             href={new URL("rss.xml", Astro.site)}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
