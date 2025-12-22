@@ -3,10 +3,10 @@ import BaseLayout from "../layouts/Layout.astro";
 ---
 
 <BaseLayout
-    pageTitle="Projects- Anurag Mishra"
+    pageTitle="Projects | Anurag Mishra"
     description="All projects by Anurag Mishra."
 >
-    <section class="mx-auto px-4 py-12">
+    <section class="mx-auto md:px-4 py-12">
         <h1 class="text-3xl md:text-4xl font-semibold mb-6">Projects</h1>
         <ul class="flex flex-col gap-4 list-disc pl-4">
             {
@@ -24,7 +24,10 @@ import BaseLayout from "../layouts/Layout.astro";
                 ].map((proj) => (
                     <li class="">
                         <span class="font-bold mr-2">
-                            <a href={proj.link}>[{proj.title}]</a> :
+                            <a class="colored-link" href={proj.link}>
+                                [{proj.title}]
+                            </a>
+                            :
                         </span>
                         {proj.desc}
                     </li>

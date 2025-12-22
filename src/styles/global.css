@@ -21,18 +21,54 @@ a {
     text-underline-offset: 3px;
 }
 
-a:hover {
-    background-color: var(--color-neutral-200);
-}
-
-.dark a:hover {
-    background-color: var(--color-neutral-800);
-}
-
 section {
     scroll-margin-top: 5rem;
 }
 
 code {
     font-family: "JetBrains Mono Variable", monospace;
+}
+
+@utility normal-link {
+    @variant hover {
+        background-color: var(--color-neutral-200);
+        @variant dark {
+            background-color: var(--color-neutral-800);
+        }
+    }
+}
+
+@utility colored-link {
+    color: #1a0dab;
+    @variant hover {
+        background-color: #0b57d0;
+        color: white;
+    }
+    @variant visited {
+        color: #681da8;
+        @variant hover {
+            color: white;
+            background-color: #681da8;
+        }
+    }
+    @variant active {
+        color: #174ea6;
+    }
+    @variant dark {
+        color: #8ab4f8;
+        @variant hover {
+            background-color: #a8c7fa;
+            color: black;
+        }
+        @variant visited {
+            color: #c58af9;
+            @variant hover {
+                background-color: #c58af9;
+                color: black;
+            }
+        }
+        @variant active {
+            color: #7aa2f7;
+        }
+    }
 }

@@ -5,7 +5,7 @@ const { frontmatter } = Astro.props;
 ---
 
 <BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
-    <article class="mx-auto px-4 py-12">
+    <article class="mx-auto md:px-4 py-12">
         <!-- Post header -->
         <header class="mb-8">
             <h1 class="text-center text-3xl md:text-4xl font-extrabold mb-2">
@@ -16,11 +16,13 @@ const { frontmatter } = Astro.props;
                 class="text-center text-sm text-neutral-500 dark:text-neutral-400"
             >
                 {
-                    frontmatter.pubDate.toLocaleDateString("en-GB", {
-                        year: "2-digit",
-                        month: "2-digit",
-                        day: "2-digit",
-                    })
+                    frontmatter.pubDate
+                        .toLocaleDateString("en-GB", {
+                            year: "2-digit",
+                            month: "2-digit",
+                            day: "2-digit",
+                        })
+                        .replaceAll("/", "-")
                 }
             </p>
         </header>
@@ -41,7 +43,9 @@ const { frontmatter } = Astro.props;
         }
 
         <!-- Main content -->
-        <div class="prose prose-gray lg:prose-lg dark:prose-invert max-w-none">
+        <div
+            class="prose prose-gray lg:prose-lg dark:prose-invert max-w-none prose-a:colored-link prose-a:no-underline"
+        >
             <slot />
         </div>
     </article>

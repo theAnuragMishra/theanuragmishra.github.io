@@ -1,5 +1,4 @@
 ---
-// import Nav from "./Nav.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
 const pathname = Astro.url.pathname;
@@ -11,15 +10,15 @@ const highlight = (href: string) => {
 <header
     class="bg-white/80 dark:bg-neutral-950/80 backdrop-blur supports-backdrop-filter:bg-opacity-60"
 >
-    <nav class="mx-auto flex items-center justify-between p-4">
-        <a href="/" class={`text-lg font-semibold`}> anurag. </a>
+    <nav class="mx-auto flex items-center justify-between md:px-4 py-4">
+        <a href="/" class={`text-lg normal-link font-semibold`}> anurag. </a>
 
         <div class="flex items-center gap-2">
             <ul class="text-sm font-medium flex">
                 <li>
                     <a
                         href="/writing"
-                        class={`block md:px-4 p-1  ${highlight("/writing") ? "" : ""}`}
+                        class={`normal-link block md:mx-4 m-1 ${highlight("/writing") ? "" : ""}`}
                     >
                         Writing
                     </a>
@@ -27,40 +26,13 @@ const highlight = (href: string) => {
                 <li>
                     <a
                         href="/projects"
-                        class={`block md:px-4 p-1  ${highlight("/projects") ? "" : ""}`}
+                        class={`normal-link block md:mx-4 m-1 ${highlight("/projects") ? "" : ""}`}
                     >
                         Projects
                     </a>
                 </li>
             </ul>
             <ThemeToggle />
-            <!-- <button id="menu-toggle" class="md:hidden p-1 rounded-lg">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    ><path
-                        fill="currentColor"
-                        d="M22 13c0 1.11-.89 2-2 2H4a2 2 0 1 1 0-4h9l2.5 2l2.5-2h2a2 2 0 0 1 2 2M12 3C3 3 3 9 3 9h18s0-6-9-6M3 18c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3v-1H3z"
-                    ></path></svg
-                >
-            </button> -->
         </div>
     </nav>
-
-    <!-- <div
-        id="mobile-nav"
-        class="hidden md:block border-t border-neutral-200 dark:border-neutral-800"
-    >
-        <Nav />
-    </div> -->
 </header>
-
-<!-- <script is:inline>
-    const toggle = document.getElementById("menu-toggle");
-    const mobileNav = document.getElementById("mobile-nav");
-    toggle?.addEventListener("click", () => {
-        mobileNav?.classList.toggle("hidden");
-    });
-</script> -->

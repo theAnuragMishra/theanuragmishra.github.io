@@ -6,10 +6,10 @@ const allPosts = await getSortedPosts();
 ---
 
 <BaseLayout
-    pageTitle="Writing- Anurag Mishra"
+    pageTitle="Writing | Anurag Mishra"
     description="A collection of posts by Anurag Mishra on software development, side projects, and coding tutorials."
 >
-    <section class="mx-auto px-4 py-12">
+    <section class="mx-auto md:px-4 py-12">
         <h1 class="text-3xl md:text-4xl font-semibold mb-10">Writing</h1>
 
         <ul class="space-y-4">
@@ -18,27 +18,24 @@ const allPosts = await getSortedPosts();
                     <li>
                         <a
                             href={`/writing/${post.id}/`}
-                            class="block space-y-2 border-neutral-200 dark:border-neutral-800 p-4 border-4"
+                            class="normal-link block space-y-2 border-neutral-200 dark:border-neutral-800 p-4 border-4"
                         >
-                            <h2 class="font-semibold text-2xl text-neutral-800 dark:text-neutral-200">
+                            <h2 class="font-semibold text-2xl">
                                 {post.data.title}
                             </h2>
 
                             {post.data.description && (
-                                <p class="text-neutral-600 dark:text-neutral-400 mt-1">
-                                    {post.data.description}
-                                </p>
+                                <p class="mt-1">{post.data.description}</p>
                             )}
 
                             <p class="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
-                                {new Date(post.data.pubDate).toLocaleDateString(
-                                    undefined,
-                                    {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                    },
-                                )}
+                                {new Date(post.data.pubDate)
+                                    .toLocaleDateString("en-GB", {
+                                        year: "2-digit",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                    })
+                                    .replaceAll("/", "-")}
                             </p>
                         </a>
                     </li>
