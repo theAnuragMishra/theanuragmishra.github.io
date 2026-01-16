@@ -1,0 +1,37 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+// import "@fontsource-variable/red-hat-display";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/global.css";
+const { pageTitle, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<html lang="en" class="transition-colors duration-300">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+        <link rel="canonical" href={canonicalURL} />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title={"Anurag Mishra"}
+            href={new URL("rss.xml", Astro.site)}
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={description} />
+        <title>{pageTitle}</title>
+    </head>
+    <body class="bg-white text-black dark:bg-black dark:text-white min-h-dvh">
+        <main class="max-w-3xl mx-auto px-4 py-8">
+            <Header />
+
+            <slot />
+
+            <Footer />
+        </main>
+    </body>
+</html>

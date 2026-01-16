@@ -1,0 +1,34 @@
+---
+import ProjectItem from "../components/ProjectItem.astro";
+import BaseLayout from "../layouts/Layout.astro";
+---
+
+<BaseLayout
+    pageTitle="Projects | Anurag Mishra"
+    description="All projects by Anurag Mishra."
+>
+    <section class="mx-auto md:px-4 py-12">
+        <h1 class="text-3xl md:text-4xl font-semibold mb-6">Projects</h1>
+        <ul class="flex flex-col gap-4 list-disc pl-4">
+            {
+                [
+                    {
+                        title: "mnnitchessclub.com",
+                        desc: "A chess server and frontend supporting PvP and tournaments. I started writing this as a simple project for announcements and event-tracking for the club, but in no time it turned into a full chess server. Also my first Go project. Surprisingly, also my first svelte project. And also the first time I deployed something via a VPS. Overall my biggest project so far.",
+                        link: "https://mnnitchessclub.com",
+                    },
+                    {
+                        title: "MNNIT Buzz",
+                        desc: "A Reddit-like social app for MNNIT. I built this during a college event as a project to try out Nextjs.",
+                        link: "https://mnnit-buzz.vercel.app",
+                    },
+                    {
+                        title: "myttendance",
+                        desc: "A simple offline attendance tracker pwa. It uses indexedDB to store your attendance data so it never leaves your device and works fully offline.",
+                        link: "https://myttendance.netlify.app",
+                    },
+                ].map((proj) => <ProjectItem info={proj} />)
+            }
+        </ul>
+    </section>
+</BaseLayout>

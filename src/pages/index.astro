@@ -1,16 +1,65 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+    pageTitle="Anurag Mishra"
+    description="My space on the web! I write stuff here!"
+>
+    <div class="container mx-auto md:px-4 py-12 space-y-4">
+        <h1
+            class="text-black dark:text-white text-3xl md:text-4xl font-semibold"
+        >
+            <em>Anurag Mishra</em>
+        </h1>
+
+        <p class="">
+            Hello! I'm Anurag and I love to listen to <a
+                class="font-bold"
+                href="https://www.youtube.com/@ashreyl">aashreyan</a
+            > sing. I love to explore a lot of things, and this website features some
+            of them. I write at times about things I find interesting.
+        </p>
+        <p class="">
+            Reach out: <a href="mailto:yoiam420@gmail.com" class="ml-1"
+                >yoiam420@gmail.com</a
+            >
+            <br />
+            Non-exhaustive set of places I am at:
+            <span class="inline-block">
+                <a
+                    class=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/theAnuragMishra">GitHub</a
+                > |
+                <a
+                    class=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://x.com/giuocopianosimp">Twitter</a
+                > |
+                <a
+                    class=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.linkedin.com/in/the-anurag-mishra/"
+                    >LinkedIn</a
+                ></span
+            >
+        </p>
+    </div>
+</Layout>
+
+<style>
+    .container a {
+        color: #1772ea;
+    }
+    :global(.dark) .container a {
+        color: #73b0ff;
+    }
+
+    .container a:hover {
+        text-decoration-line: underline;
+    }
+</style>

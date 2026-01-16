@@ -1,0 +1,52 @@
+---
+import BaseLayout from "./Layout.astro";
+import { Image } from "astro:assets";
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
+    <article class="mx-auto md:px-4 py-12">
+        <!-- Post header -->
+        <header class="mb-8">
+            <h1 class="text-center text-3xl md:text-4xl font-extrabold mb-2">
+                {frontmatter.title}
+            </h1>
+
+            <p
+                class="text-center text-sm text-neutral-500 dark:text-neutral-400"
+            >
+                {
+                    frontmatter.pubDate
+                        .toLocaleDateString("en-GB", {
+                            year: "2-digit",
+                            month: "2-digit",
+                            day: "2-digit",
+                        })
+                        .replaceAll("/", "-")
+                }
+            </p>
+        </header>
+
+        <!-- Optional cover image -->
+        {
+            frontmatter.cover.url && (
+                <div class="my-8 flex justify-center">
+                    <Image
+                        src={frontmatter.cover.url}
+                        alt={frontmatter.cover.alt}
+                        width={700}
+                        height={300}
+                        class="border border-neutral-200 dark:border-neutral-800"
+                    />
+                </div>
+            )
+        }
+
+        <!-- Main content -->
+        <div
+            class="prose-a:no-underline prose lg:prose-lg dark:prose-invert max-w-none prose-p:text-black prose-p:dark:text-white prose-headings:text-black prose-headings:dark:text-white prose-p:text-justify prose-code:text-black prose-code:dark:text-white prose-strong:text-black prose-strong:dark:text-white prose-li:text-black prose-li:dark:text-white prose-ul:marker:text-black prose-ul:dark:marker:text-white prose-ol:marker:text-black prose-ol:dark:marker:text-white"
+        >
+            <slot />
+        </div>
+    </article>
+</BaseLayout>

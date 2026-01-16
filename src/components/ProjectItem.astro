@@ -1,0 +1,14 @@
+---
+const { info } = Astro.props;
+---
+
+<li class="">
+    <span class="font-bold mr-2">
+        <a
+            class="text-[#1772ea] dark:text-[#73b0ff] hover:underline"
+            href={info.link}>{info.title}</a
+        >
+        :
+    </span>
+    {info.desc}
+</li>

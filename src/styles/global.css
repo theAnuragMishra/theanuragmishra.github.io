@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-family: "Red Hat Display Variable", sans-serif;
+}
+
+a {
+    text-underline-offset: 4px;
+    text-decoration-style: dashed;
+}
+
+article a {
+    color: #1772ea;
+}
+.dark article a {
+    color: #73b0ff;
+}
+
+article a:hover {
+    text-decoration-line: underline;
+}
+
+section {
+    scroll-margin-top: 5rem;
+}
+
+code {
+    font-family: "JetBrains Mono Variable", monospace;
+}
+
+.prose blockquote {
+    & p {
+        &::before {
+            content: none;
+        }
+        &::after {
+            content: none;
+        }
+    }
+}
+
+.prose code {
+    &::before {
+        content: none;
+    }
+    &::after {
+        content: none;
+    }
+}
