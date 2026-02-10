@@ -1,0 +1,64 @@
+---
+interface Props {
+    title: string;
+    subtitle?: string;
+    year?: number;
+    rating?: number;
+    notes?: string;
+    image: string;
+    type?: string;
+}
+
+const { title, subtitle, year, rating, notes, image, type } = Astro.props;
+---
+
+<div class="flex gap-4 rounded-lg">
+    <!-- Thumbnail -->
+    <div
+        class="w-16 md:w-20 rounded border border-neutral-200 dark:border-neutral-800 shrink-0 h-fit"
+    >
+        <img src={image} alt="cover image" />
+    </div>
+
+    <!-- Content -->
+    <div
+        class="flex-1 min-w-0 flex flex-col md:flex-row md:items-start md:justify-between gap-2"
+    >
+        <!-- Left side: Title, subtitle, notes -->
+        <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-black dark:text-white">
+                {title}
+            </h3>
+            {
+                subtitle && (
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        {subtitle}
+                    </p>
+                )
+            }
+
+            {
+                notes && (
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                        {notes}
+                    </p>
+                )
+            }
+        </div>
+
+        <!-- Right side: Year and rating -->
+        <div
+            class="flex flex-row md:flex-col items-baseline md:items-end gap-2 md:gap-1 shrink-0 text-sm"
+        >
+            <span class="text-neutral-500 dark:text-neutral-500 italic">
+                {year}
+            </span>{
+                rating && (
+                    <span class="font-medium text-black dark:text-white">
+                        {rating}/10
+                    </span>
+                )
+            }
+        </div>
+    </div>
+</div>

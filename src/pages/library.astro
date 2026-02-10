@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LibrarySection from "../components/LibrarySection.astro";
+import LibraryItem from "../components/LibraryItem.astro";
+
+// Import library data
+import movies from "../data/library/movies.json";
+import books from "../data/library/books.json";
+import music from "../data/library/music.json";
+import places from "../data/library/places.json";
+---
+
+<Layout title="Library">
+    <div class="max-w-3xl mx-auto px-4 py-12">
+        <div class="mb-10">
+            <h1
+                class="text-3xl md:text-4xl font-semibold mb-4 text-black dark:text-white"
+            >
+                Library
+            </h1>
+            <p class="text-neutral-600 dark:text-neutral-400">
+                A collection of movies, books, music, and places that have been
+                a part of my life.
+            </p>
+        </div>
+
+        <div class="space-y-12">
+            <!-- Movies Section -->
+            <LibrarySection title="Movies" id="movies">
+                {
+                    movies.map((movie) => (
+                        <LibraryItem
+                            title={movie.title}
+                            year={movie.year}
+                            rating={movie.rating}
+                            notes={movie.notes}
+                            image={movie.image}
+                        />
+                    ))
+                }
+            </LibrarySection>
+
+            <!-- Books Section -->
+            <LibrarySection title="Books" id="books">
+                {
+                    books.map((book) => (
+                        <LibraryItem
+                            title={book.title}
+                            subtitle={book.author}
+                            year={book.year}
+                            rating={book.rating}
+                            notes={book.notes}
+                            image={book.image}
+                        />
+                    ))
+                }
+            </LibrarySection>
+
+            <!-- Music Section -->
+            <LibrarySection title="Music" id="music">
+                {
+                    music.map((item) => (
+                        <LibraryItem
+                            title={item.title}
+                            subtitle={item.artist}
+                            type={item.type}
+                            notes={item.notes}
+                            image={item.image}
+                        />
+                    ))
+                }
+            </LibrarySection>
+
+            <!-- Places Section -->
+            <LibrarySection title="Places" id="places">
+                {
+                    places.map((place) => (
+                        <LibraryItem
+                            title={place.name}
+                            subtitle={place.location}
+                            year={place.year}
+                            notes={place.notes}
+                            image={place.image}
+                        />
+                    ))
+                }
+            </LibrarySection>
+        </div>
+    </div>
+</Layout>
