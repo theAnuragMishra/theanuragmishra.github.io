@@ -8,6 +8,7 @@
     createInitialState,
   } from "../lib/gameStore";
   import Spinner from "./Spinner.svelte";
+  import { getRandomStarterWord, isValid } from "../lib/dictionary";
 
   // Game state
   type GameStateWithBonus = GameState;
@@ -24,52 +25,22 @@
   // Dialog element reference
   let resetDialog: HTMLDialogElement;
 
-  // Dictionary
-  let wordSet: Set<string> | null = $state(null);
-  let starterWords: string[] = $state([]);
   let isLoading = $state(true);
 
-  // Load dictionary and starter words
-  onMount(async () => {
+  onMount(() => {
     try {
-      // Load main dictionary
-      const wordsResponse = await fetch("/data/words.txt");
-      const wordsText = await wordsResponse.text();
-      const words = wordsText
-        .trim()
-        .split("\n")
-        .map((w) => w.toLowerCase());
-      wordSet = new Set(words);
-
-      // Load starter words
-      const startersResponse = await fetch("/data/starter-words.txt");
-      const startersText = await startersResponse.text();
-      starterWords = startersText
-        .trim()
-        .split("\n")
-        .map((w) => w.toLowerCase());
-
-      // Load game state
       const loaded = loadState();
       if (loaded) {
         gameState = loaded;
         isStarting = false;
       }
-
       isLoading = false;
     } catch (error) {
-      console.error("Failed to load dictionary:", error);
-      errorMessage = "Failed to load word dictionary. Please refresh the page.";
+      console.error(error);
+      errorMessage = "Failed to load game state. Refresh the page.";
       isLoading = false;
     }
   });
-
-  // Get a random starter word
-  function getRandomStarter(): string {
-    if (starterWords.length === 0) return "crane";
-    const randomIndex = Math.floor(Math.random() * starterWords.length);
-    return starterWords[randomIndex];
-  }
 
   // Start new game with a word
   function startGame() {
@@ -93,7 +64,7 @@
       return;
     }
 
-    if (!wordSet || !wordSet.has(word)) {
+    if (!isValid(word)) {
       errorMessage = "Starting word must be a valid English word";
       errorKey++;
       return;
@@ -108,8 +79,7 @@
 
   // Use random starter
   function useRandomStarter() {
-    starterInput = getRandomStarter();
-    starterInputEl?.focus();
+    starterInput = getRandomStarterWord();
   }
 
   // Check if a word can be formed from available letters
@@ -125,7 +95,7 @@
 
   // Submit a guess
   function submitGuess() {
-    if (!gameState || !wordSet) return;
+    if (!gameState) return;
 
     const guess = currentInput.trim().toLowerCase();
     const previousScore = gameState.score;
@@ -154,7 +124,7 @@
       return;
     }
 
-    if (!wordSet.has(guess)) {
+    if (!isValid(guess)) {
       errorMessage = "Not a valid English word";
       errorKey++;
       return;
