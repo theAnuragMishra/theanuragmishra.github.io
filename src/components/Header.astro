@@ -3,48 +3,48 @@ import ThemeToggle from "./ThemeToggle.astro";
 
 const pathname = Astro.url.pathname;
 const highlight = (href: string) => {
-    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
 };
 ---
 
 <header class="">
-    <nav class="mx-auto flex items-center justify-between md:px-4 py-4">
-        <a href="/" class={`text-lg font-semibold`}> anurag. </a>
+  <nav class="mx-auto flex items-center justify-between md:px-4 py-4">
+    <a href="/" class={`text-lg font-semibold`}> anurag. </a>
 
-        <div class="flex items-center gap-5">
-            <ul class="text-sm font-medium gap-3 flex">
-                <li>
-                    <a
-                        href="/writing"
-                        class={`block ${highlight("/writing") ? "active" : ""}`}
-                    >
-                        Writing
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/projects"
-                        class={`block ${highlight("/projects") ? "active" : ""}`}
-                    >
-                        Projects
-                    </a>
-                </li>
-            </ul>
-            <ThemeToggle />
-        </div>
-    </nav>
+    <div class="flex items-center gap-5">
+      <ul class="text-sm font-medium gap-3 flex">
+        <li>
+          <a
+            href="/writing"
+            class={`block ${highlight("/writing") ? "active" : ""}`}
+          >
+            Writing
+          </a>
+        </li>
+        <li>
+          <a
+            href="/projects"
+            class={`block ${highlight("/projects") ? "active" : ""}`}
+          >
+            Projects
+          </a>
+        </li>
+      </ul>
+      <ThemeToggle />
+    </div>
+  </nav>
 </header>
 
 <style>
-    ul a:hover {
-        color: #1772ea;
-    }
-    :global(.dark) ul a:hover {
-        color: #73b0ff;
-    }
-    a.active {
-        text-decoration: underline wavy;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 4px;
-    }
+  ul a:hover {
+    color: #1772ea;
+  }
+  :global(.dark) ul a:hover {
+    color: #73b0ff;
+  }
+  a.active {
+    text-decoration: underline wavy;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
 </style>

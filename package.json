@@ -12,11 +12,13 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/svelte": "^7.2.5",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.11",
     "astro-expressive-code": "^0.41.6",
     "rehype-external-links": "^3.0.0",
+    "svelte": "^5.53.3",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {

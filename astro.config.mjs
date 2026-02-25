@@ -7,11 +7,14 @@ import sitemap from "@astrojs/sitemap";
 
 import expressiveCode from "astro-expressive-code";
 
+import svelte from "@astrojs/svelte";
+
 // https://astro.build/config
 export default defineConfig({
   vite: { plugins: [tailwindcss()] },
   site: "https://theanuragmishra.github.io",
   integrations: [
+    svelte(),
     sitemap(),
     expressiveCode({
       defaultProps: {
