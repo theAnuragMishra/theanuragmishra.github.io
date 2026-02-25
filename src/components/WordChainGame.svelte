@@ -354,7 +354,7 @@
         {#if errorMessage}
           {#key errorKey}
             <div
-              class="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-700 dark:text-red-400 text-sm animate-shake"
+              class="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-700 dark:text-red-400 text-sm animate-shake text-center"
             >
               {errorMessage}
             </div>
@@ -504,7 +504,7 @@
             {#each getUniqueAvailableLetters() as letter}
               <button
                 onclick={() => addLetter(letter)}
-                class="aspect-square flex items-center justify-center text-xl md:text-2xl font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors active:scale-95 uppercase px-3 py-1"
+                class="aspect-square flex items-center justify-center text-xl md:text-2xl font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors active:scale-95 uppercase w-11 h-11"
               >
                 {letter}
               </button>
