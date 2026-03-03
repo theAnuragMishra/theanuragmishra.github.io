@@ -20,8 +20,10 @@ export default defineConfig({
       defaultProps: {
         wrap: true,
       },
+      themes: ["material-theme-ocean"],
       styleOverrides: {
         codeFontFamily: "'JetBrains Mono Variable', monospace",
+        codeBackground: "transparent",
       },
     }),
   ],

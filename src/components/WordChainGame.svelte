@@ -11,9 +11,7 @@
   import { getRandomStarterWord, isValid } from "../lib/dictionary";
 
   // Game state
-  type GameStateWithBonus = GameState;
-
-  let gameState: GameStateWithBonus | null = $state(null);
+  let gameState: GameState | null = $state(null);
   let currentInput = $state("");
   let errorMessage = $state("");
   let successMessage = $state("");
@@ -165,6 +163,7 @@
       bonusLetterInput = "";
     }
     saveState(gameState);
+    inputEl?.focus();
 
     successMessage = `+${guess.length} points!`;
     currentInput = "";
@@ -260,6 +259,7 @@
     gameState.bonusAvailable = false;
     bonusLetterInput = "";
     saveState(gameState);
+    inputEl?.focus();
   }
 
   function handleBonusKeydown(event: KeyboardEvent) {

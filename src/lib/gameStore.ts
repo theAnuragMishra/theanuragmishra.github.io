@@ -6,6 +6,7 @@ export interface GameState {
   bonusLetter: string | null;
   startedAt: string;
   lastUpdatedAt: string;
+  over: boolean;
 }
 
 const STORAGE_KEY = "wordchain_game_state";
@@ -74,6 +75,7 @@ export function createInitialState(startingWord: string): GameState {
     bonusLetter: null,
     startedAt: new Date().toISOString(),
     lastUpdatedAt: new Date().toISOString(),
+    over: false,
   };
 }
 
