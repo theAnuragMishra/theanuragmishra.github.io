@@ -11,8 +11,9 @@
   import {
     getRandomStarterWord,
     isValid,
-    words,
+    getWordIndex,
     lettersToMask,
+    wordMask,
     buildCandidatesFromAllowedMask,
     filterCandidatesForShrunkMask,
     expandCandidatesForAddedLetter,
@@ -36,6 +37,16 @@
   // Candidate tracking (indices into wordList)
   let currentCandidates: Set<number> = new Set();
   let currentAllowedMask = $state(0);
+  let usedWordIndices: Set<number> = new Set();
+
+  function buildUsedWordIndexSet(usedWords: string[]): Set<number> {
+    const used = new Set<number>();
+    for (const w of usedWords) {
+      const idx = getWordIndex(w);
+      if (idx >= 0) used.add(idx);
+    }
+    return used;
+  }
 
   onMount(() => {
     try {
@@ -47,13 +58,11 @@
         const allowedLetters = gameState.bonusLetter
           ? `${gameState.currentWord}${gameState.bonusLetter}`
           : gameState.currentWord;
-        const usedSet = new Set<number>(
-          gameState.usedWords.map((w) => words.indexOf(w)),
-        );
+        usedWordIndices = buildUsedWordIndexSet(gameState.usedWords);
         currentAllowedMask = lettersToMask(allowedLetters);
         currentCandidates = buildCandidatesFromAllowedMask(
           currentAllowedMask,
-          usedSet,
+          usedWordIndices,
         );
       }
       isLoading = false;
@@ -95,15 +104,11 @@
     gameState = createInitialState(word);
     // build initial candidates for the new game
     const allowedLetters = gameState.currentWord;
-    const usedSet = new Set<number>();
-    for (const w of gameState.usedWords) {
-      const idx = words.indexOf(w);
-      if (idx >= 0) usedSet.add(idx);
-    }
+    usedWordIndices = buildUsedWordIndexSet(gameState.usedWords);
     currentAllowedMask = lettersToMask(allowedLetters);
     currentCandidates = buildCandidatesFromAllowedMask(
       currentAllowedMask,
-      usedSet,
+      usedWordIndices,
     );
 
     // if no candidates immediately, mark game over
@@ -121,19 +126,9 @@
     starterInput = getRandomStarterWord();
   }
 
-  // Check if a word can be formed from available letters
-  function canFormWord(word: string, available: string): boolean {
-    const allowed = new Set(available);
-
-    for (const c of word) {
-      if (!allowed.has(c)) return false;
-    }
-
-    return true;
-  }
-
   // Submit a guess
   function submitGuess() {
+    // console.log("left candidates:", currentCandidates);
     if (!gameState) return;
     if (gameState.over) return;
 
@@ -170,17 +165,20 @@
       return;
     }
 
-    if (gameState.usedWords.includes(guess)) {
+    const guessIdx = getWordIndex(guess);
+    if (guessIdx < 0) {
+      errorMessage = "Not a valid English word";
+      errorKey++;
+      return;
+    }
+
+    if (usedWordIndices.has(guessIdx)) {
       errorMessage = "Word already used in this game";
       errorKey++;
       return;
     }
 
-    const allowedLetters = gameState.bonusLetter
-      ? `${gameState.currentWord}${gameState.bonusLetter}`
-      : gameState.currentWord;
-
-    if (!canFormWord(guess, allowedLetters)) {
+    if ((wordMask(guess) & ~currentAllowedMask) !== 0) {
       const bonusLabel = gameState.bonusLetter
         ? ` + bonus "${gameState.bonusLetter.toUpperCase()}"`
         : "";
@@ -208,17 +206,19 @@
     const newAllowedLetters = gameState.bonusLetter
       ? `${gameState.currentWord}${gameState.bonusLetter}`
       : gameState.currentWord;
+    //const t = performance.now();
     const newMask = lettersToMask(newAllowedLetters);
     currentAllowedMask = newMask;
     // remove used word from candidates (if present)
-    const usedIdx = words.indexOf(guess);
-    if (currentCandidates.has(usedIdx)) currentCandidates.delete(usedIdx);
+    usedWordIndices.add(guessIdx);
+    if (currentCandidates.has(guessIdx)) currentCandidates.delete(guessIdx);
     // filter by shrunk mask
     filterCandidatesForShrunkMask(newMask, currentCandidates);
     // Only check for game over if no bonus is available (per requirement)
     if (!gameState.bonusAvailable && currentCandidates.size === 0) {
       gameState.over = true;
     }
+    //console.log("Candidate filtering took", performance.now() - t, "ms");
     saveState(gameState);
     inputEl?.focus();
 
@@ -260,6 +260,7 @@
     // clear candidate cache/state
     currentCandidates = new Set();
     currentAllowedMask = 0;
+    usedWordIndices = new Set();
     resetDialog?.close();
   }
 
@@ -321,21 +322,20 @@
     bonusLetterInput = "";
 
     // expand candidates because a single letter was added
+    //const t = performance.now();
     const prevMask = currentAllowedMask;
     const newMask = lettersToMask(`${gameState.currentWord}${trimmed}`);
     currentAllowedMask = newMask;
-    const usedSet = new Set<number>(
-      gameState.usedWords.map((w) => words.indexOf(w)),
-    );
     expandCandidatesForAddedLetter(
       prevMask,
       newMask,
       currentCandidates,
-      usedSet,
+      usedWordIndices,
     );
     if (currentCandidates.size === 0) {
       gameState.over = true;
     }
+    //console.log("Candidate expansion took", performance.now() - t, "ms");
     saveState(gameState);
     inputEl?.focus();
   }

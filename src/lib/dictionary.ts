@@ -1,38 +1,39 @@
 import words from "./words.json";
 import starterWords from "./starter-words.json";
-import maskIndex from "./maskIndex.json";
-import indexToMask from "./indexToMask.json";
+
+const wordList = words as string[];
+const starterWordList = starterWords as string[];
+
+const wordToIndex = new Map<string, number>();
+const indexToMask = new Uint32Array(wordList.length);
+const maskIndex = new Map<number, number[]>();
+
+for (let i = 0; i < wordList.length; i++) {
+  const w = wordList[i];
+  wordToIndex.set(w, i);
+  const mask = wordMask(w);
+  indexToMask[i] = mask;
+  const bucket = maskIndex.get(mask);
+  if (bucket) bucket.push(i);
+  else maskIndex.set(mask, [i]);
+}
 
 export function isValid(word: string) {
-  word = word.toLowerCase();
-  let left = 0,
-    right = words.length - 1;
-
-  while (left <= right) {
-    const mid = (left + right) >> 1;
-    if (words[mid] === word) {
-      return true;
-    }
-    if (words[mid] < word) left = mid + 1;
-    else right = mid - 1;
-  }
-
-  return false;
+  return wordToIndex.has(word.toLowerCase());
 }
 
 export function getRandomStarterWord() {
-  return starterWords[Math.floor(Math.random() * starterWords.length)];
+  return starterWordList[Math.floor(Math.random() * starterWordList.length)];
 }
 
 // Bitmask helpers and fast candidate management
 export function wordMask(word: string): number {
   let m = 0;
-  const seen = new Set<string>();
-  for (const ch of word) {
-    if (ch < "a" || ch > "z") continue;
-    if (seen.has(ch)) continue;
-    seen.add(ch);
-    m |= 1 << (ch.charCodeAt(0) - 97);
+  for (let i = 0; i < word.length; i++) {
+    const code = word.charCodeAt(i) - 97;
+    if (code >= 0 && code < 26) {
+      m |= 1 << code;
+    }
   }
   return m >>> 0;
 }
@@ -41,8 +42,9 @@ export function lettersToMask(letters: string): number {
   return wordMask(letters.toLowerCase());
 }
 
-// maskIndex: { [mask: string]: number[] } where numbers are indices into `words`
-// indexToMask: number[] parallel to words
+export function getWordIndex(word: string): number {
+  return wordToIndex.get(word.toLowerCase()) ?? -1;
+}
 
 // Enumerate subsets of mask and collect candidate indices (skip usedSet)
 export function buildCandidatesFromAllowedMask(
@@ -51,8 +53,7 @@ export function buildCandidatesFromAllowedMask(
 ): Set<number> {
   const candidates = new Set<number>();
   for (let sub = allowedMask; sub; sub = (sub - 1) & allowedMask) {
-    const key = String(sub);
-    const indices: number[] = maskIndex[key];
+    const indices = maskIndex.get(sub);
     if (!indices) continue;
     for (const idx of indices) {
       if (!usedSet.has(idx)) candidates.add(idx);
@@ -83,13 +84,10 @@ export function expandCandidatesForAddedLetter(
   if (added === 0) return;
   for (let sub = newMask; sub; sub = (sub - 1) & newMask) {
     if ((sub & added) === 0) continue; // require subset includes added bit
-    const key = String(sub);
-    const indices = maskIndex[key];
+    const indices = maskIndex.get(sub);
     if (!indices) continue;
     for (const idx of indices) {
       if (!usedSet.has(idx)) candidates.add(idx);
     }
   }
 }
-
-export { words };
