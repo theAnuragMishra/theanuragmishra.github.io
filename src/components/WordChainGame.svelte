@@ -8,7 +8,15 @@
     createInitialState,
   } from "../lib/gameStore";
   import Spinner from "./Spinner.svelte";
-  import { getRandomStarterWord, isValid } from "../lib/dictionary";
+  import {
+    getRandomStarterWord,
+    isValid,
+    words,
+    lettersToMask,
+    buildCandidatesFromAllowedMask,
+    filterCandidatesForShrunkMask,
+    expandCandidatesForAddedLetter,
+  } from "../lib/dictionary";
 
   // Game state
   let gameState: GameState | null = $state(null);
@@ -25,12 +33,28 @@
 
   let isLoading = $state(true);
 
+  // Candidate tracking (indices into wordList)
+  let currentCandidates: Set<number> = new Set();
+  let currentAllowedMask = $state(0);
+
   onMount(() => {
     try {
       const loaded = loadState();
       if (loaded) {
         gameState = loaded;
         isStarting = false;
+        // build initial candidates for the loaded state
+        const allowedLetters = gameState.bonusLetter
+          ? `${gameState.currentWord}${gameState.bonusLetter}`
+          : gameState.currentWord;
+        const usedSet = new Set<number>(
+          gameState.usedWords.map((w) => words.indexOf(w)),
+        );
+        currentAllowedMask = lettersToMask(allowedLetters);
+        currentCandidates = buildCandidatesFromAllowedMask(
+          currentAllowedMask,
+          usedSet,
+        );
       }
       isLoading = false;
     } catch (error) {
@@ -69,6 +93,23 @@
     }
 
     gameState = createInitialState(word);
+    // build initial candidates for the new game
+    const allowedLetters = gameState.currentWord;
+    const usedSet = new Set<number>();
+    for (const w of gameState.usedWords) {
+      const idx = words.indexOf(w);
+      if (idx >= 0) usedSet.add(idx);
+    }
+    currentAllowedMask = lettersToMask(allowedLetters);
+    currentCandidates = buildCandidatesFromAllowedMask(
+      currentAllowedMask,
+      usedSet,
+    );
+
+    // if no candidates immediately, mark game over
+    if (currentCandidates.size === 0) {
+      gameState.over = true;
+    }
     saveState(gameState);
     isStarting = false;
     errorMessage = "";
@@ -94,6 +135,7 @@
   // Submit a guess
   function submitGuess() {
     if (!gameState) return;
+    if (gameState.over) return;
 
     const guess = currentInput.trim().toLowerCase();
     const previousScore = gameState.score;
@@ -162,6 +204,21 @@
       gameState.bonusLetter = null;
       bonusLetterInput = "";
     }
+
+    const newAllowedLetters = gameState.bonusLetter
+      ? `${gameState.currentWord}${gameState.bonusLetter}`
+      : gameState.currentWord;
+    const newMask = lettersToMask(newAllowedLetters);
+    currentAllowedMask = newMask;
+    // remove used word from candidates (if present)
+    const usedIdx = words.indexOf(guess);
+    if (currentCandidates.has(usedIdx)) currentCandidates.delete(usedIdx);
+    // filter by shrunk mask
+    filterCandidatesForShrunkMask(newMask, currentCandidates);
+    // Only check for game over if no bonus is available (per requirement)
+    if (!gameState.bonusAvailable && currentCandidates.size === 0) {
+      gameState.over = true;
+    }
     saveState(gameState);
     inputEl?.focus();
 
@@ -200,6 +257,9 @@
     errorMessage = "";
     successMessage = "";
     bonusLetterInput = "";
+    // clear candidate cache/state
+    currentCandidates = new Set();
+    currentAllowedMask = 0;
     resetDialog?.close();
   }
 
@@ -234,6 +294,7 @@
 
   function claimBonusLetter() {
     if (!gameState) return;
+    if (gameState.over) return;
     const trimmed = bonusLetterInput.trim().toLowerCase();
 
     errorMessage = "";
@@ -258,6 +319,23 @@
     gameState.bonusLetter = trimmed;
     gameState.bonusAvailable = false;
     bonusLetterInput = "";
+
+    // expand candidates because a single letter was added
+    const prevMask = currentAllowedMask;
+    const newMask = lettersToMask(`${gameState.currentWord}${trimmed}`);
+    currentAllowedMask = newMask;
+    const usedSet = new Set<number>(
+      gameState.usedWords.map((w) => words.indexOf(w)),
+    );
+    expandCandidatesForAddedLetter(
+      prevMask,
+      newMask,
+      currentCandidates,
+      usedSet,
+    );
+    if (currentCandidates.size === 0) {
+      gameState.over = true;
+    }
     saveState(gameState);
     inputEl?.focus();
   }
@@ -383,158 +461,171 @@
           Reset
         </button>
       </div>
-
-      <!-- Main content -->
-      <div class="flex-1 flex flex-col space-y-6">
-        <!-- Top section: Current word and score -->
-        <div class="space-y-6">
-          <!-- Current word display -->
-          <div class="text-center">
-            <div
-              class="text-sm text-neutral-500 dark:text-neutral-500 mb-3 uppercase tracking-wide"
-            >
-              Current Word
-            </div>
-            <div
-              class="inline-block bg-neutral-50 dark:bg-neutral-900 px-6 md:px-8 py-4 md:py-6 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
-            >
+      {#if gameState.over}
+        <!-- Game Over modal (replaces inputs) -->
+        <div
+          class="max-w-md mx-auto bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-center"
+        >
+          <h2 class="text-2xl font-semibold text-black dark:text-white mb-2">
+            Game Over
+          </h2>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+            No more valid words can be formed from your available letters.
+          </p>
+          <div class="text-lg font-bold mb-4">Score: {gameState.score}</div>
+        </div>
+      {:else}
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col space-y-6">
+          <!-- Top section: Current word and score -->
+          <div class="space-y-6">
+            <!-- Current word display -->
+            <div class="text-center">
               <div
-                class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest text-black dark:text-white"
+                class="text-sm text-neutral-500 dark:text-neutral-500 mb-3 uppercase tracking-wide"
               >
-                {gameState.currentWord.toUpperCase()}
+                Current Word
               </div>
-            </div>
-          </div>
-
-          <!-- Score -->
-          <div class="text-center">
-            <div
-              class="text-sm text-neutral-500 dark:text-neutral-500 mb-2 uppercase tracking-wide"
-            >
-              Score
-            </div>
-            <div
-              class="text-3xl md:text-4xl font-bold tabular-nums text-black dark:text-white"
-            >
-              {gameState.score}
-            </div>
-          </div>
-
-          <!-- Current input display -->
-          <div class="text-center">
-            <div
-              class="text-xs text-neutral-500 dark:text-neutral-500 mb-2 uppercase tracking-wide"
-            >
-              Your Word
-            </div>
-            <div
-              class="relative min-h-12 flex items-center justify-center bg-white dark:bg-black border-2 border-neutral-300 dark:border-neutral-700"
-            >
-              <input
-                type="text"
-                bind:value={currentInput}
-                onkeydown={handleKeydown}
-                inputmode="none"
-                bind:this={inputEl}
-                placeholder="Make a new word"
-                class="flex-1 px-4 py-3 text-lg border bg-white dark:bg-black text-black dark:text-white focus:outline-none uppercase text-center"
-              />
-              {#if successMessage}
+              <div
+                class="inline-block bg-neutral-50 dark:bg-neutral-900 px-6 md:px-8 py-4 md:py-6 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
+              >
                 <div
-                  class="absolute -top-9 left-1/2 -translate-x-1/2 bg-black text-green-700 text-xs font-medium px-2.5 py-1 rounded shadow-sm"
+                  class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest text-black dark:text-white"
                 >
-                  {successMessage}
+                  {gameState.currentWord.toUpperCase()}
                 </div>
-              {/if}
+              </div>
             </div>
-          </div>
 
-          <!-- Messages -->
-          {#if errorMessage}
-            {#key errorKey}
+            <!-- Score -->
+            <div class="text-center">
               <div
-                class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-700 dark:text-red-400 text-sm text-center animate-shake"
+                class="text-sm text-neutral-500 dark:text-neutral-500 mb-2 uppercase tracking-wide"
               >
-                {errorMessage}
+                Score
               </div>
-            {/key}
-          {/if}
-        </div>
-
-        <!-- Bottom section: Keyboard -->
-        <div class="space-y-4 pb-4">
-          {#if gameState.bonusAvailable || gameState.bonusLetter}
-            <div
-              class="flex flex-col items-center gap-2 border border-neutral-200 dark:border-neutral-800 rounded-lg px-4 py-3 bg-neutral-50 dark:bg-neutral-900"
-            >
-              <div class="text-xs text-neutral-500 uppercase tracking-wide">
-                Bonus Letter (next word only)
+              <div
+                class="text-3xl md:text-4xl font-bold tabular-nums text-black dark:text-white"
+              >
+                {gameState.score}
               </div>
-              {#if gameState.bonusAvailable && !gameState.bonusLetter}
-                <div class="flex items-center gap-2">
-                  <input
-                    type="text"
-                    bind:value={bonusLetterInput}
-                    onkeydown={handleBonusKeydown}
-                    maxlength="1"
-                    placeholder="A"
-                    class="w-16 h-10 text-center text-lg uppercase border border-neutral-300 dark:border-neutral-700 rounded bg-white dark:bg-black text-black dark:text-white focus:outline-none"
-                  />
-                  <button
-                    onclick={claimBonusLetter}
-                    class="px-3 py-2 text-xs font-medium bg-black dark:bg-white text-white dark:text-black rounded hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
-                  >
-                    Claim
-                  </button>
-                </div>
-              {:else if gameState.bonusLetter}
-                <div class="text-sm font-semibold text-black dark:text-white">
-                  Active: {gameState.bonusLetter.toUpperCase()}
-                </div>
-              {/if}
             </div>
-          {/if}
-          <!-- Letter keyboard -->
-          <div
-            class="text-xs text-neutral-500 dark:text-neutral-500 mb-2 text-center uppercase tracking-wide"
-          >
-            Available Letters
-          </div>
-          <div class="flex flex-wrap gap-2 max-w-md mx-auto justify-center">
-            {#each getUniqueAvailableLetters() as letter}
-              <button
-                onclick={() => addLetter(letter)}
-                class="aspect-square flex items-center justify-center text-xl md:text-2xl font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors active:scale-95 uppercase w-11 h-11"
+
+            <!-- Current input display -->
+            <div class="text-center">
+              <div
+                class="text-xs text-neutral-500 dark:text-neutral-500 mb-2 uppercase tracking-wide"
               >
-                {letter}
-              </button>
-            {/each}
+                Your Word
+              </div>
+              <div
+                class="relative min-h-12 flex items-center justify-center bg-white dark:bg-black border-2 border-neutral-300 dark:border-neutral-700"
+              >
+                <input
+                  type="text"
+                  bind:value={currentInput}
+                  onkeydown={handleKeydown}
+                  inputmode="none"
+                  bind:this={inputEl}
+                  placeholder="Make a new word"
+                  class="flex-1 px-4 py-3 text-lg border bg-white dark:bg-black text-black dark:text-white focus:outline-none uppercase text-center"
+                />
+                {#if successMessage}
+                  <div
+                    class="absolute -top-9 left-1/2 -translate-x-1/2 bg-black text-green-700 text-xs font-medium px-2.5 py-1 rounded shadow-sm"
+                  >
+                    {successMessage}
+                  </div>
+                {/if}
+              </div>
+            </div>
+
+            <!-- Messages -->
+            {#if errorMessage}
+              {#key errorKey}
+                <div
+                  class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-700 dark:text-red-400 text-sm text-center animate-shake"
+                >
+                  {errorMessage}
+                </div>
+              {/key}
+            {/if}
           </div>
 
-          <!-- Action buttons -->
-          <div class="flex gap-2 max-w-md mx-auto">
-            <button
-              onclick={backspace}
-              class="flex-1 px-4 py-3 text-sm font-medium bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors"
+          <!-- Bottom section: Keyboard -->
+          <div class="space-y-4 pb-4">
+            {#if gameState.bonusAvailable || gameState.bonusLetter}
+              <div
+                class="flex flex-col items-center gap-2 border border-neutral-200 dark:border-neutral-800 rounded-lg px-4 py-3 bg-neutral-50 dark:bg-neutral-900"
+              >
+                <div class="text-xs text-neutral-500 uppercase tracking-wide">
+                  Bonus Letter (next word only)
+                </div>
+                {#if gameState.bonusAvailable && !gameState.bonusLetter}
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="text"
+                      bind:value={bonusLetterInput}
+                      onkeydown={handleBonusKeydown}
+                      maxlength="1"
+                      placeholder="A"
+                      class="w-16 h-10 text-center text-lg uppercase border border-neutral-300 dark:border-neutral-700 rounded bg-white dark:bg-black text-black dark:text-white focus:outline-none"
+                    />
+                    <button
+                      onclick={claimBonusLetter}
+                      class="px-3 py-2 text-xs font-medium bg-black dark:bg-white text-white dark:text-black rounded hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+                    >
+                      Claim
+                    </button>
+                  </div>
+                {:else if gameState.bonusLetter}
+                  <div class="text-sm font-semibold text-black dark:text-white">
+                    Active: {gameState.bonusLetter.toUpperCase()}
+                  </div>
+                {/if}
+              </div>
+            {/if}
+            <!-- Letter keyboard -->
+            <div
+              class="text-xs text-neutral-500 dark:text-neutral-500 mb-2 text-center uppercase tracking-wide"
             >
-              ← Backspace
-            </button>
-            <button
-              onclick={clearInput}
-              class="px-4 py-3 text-sm font-medium bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors"
-            >
-              Clear
-            </button>
-            <button
-              onclick={submitGuess}
-              class="flex-1 px-4 py-3 text-sm font-medium bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
-            >
-              Submit
-            </button>
+              Available Letters
+            </div>
+            <div class="flex flex-wrap gap-2 max-w-md mx-auto justify-center">
+              {#each getUniqueAvailableLetters() as letter}
+                <button
+                  onclick={() => addLetter(letter)}
+                  class="aspect-square flex items-center justify-center text-xl md:text-2xl font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors active:scale-95 uppercase w-11 h-11"
+                >
+                  {letter}
+                </button>
+              {/each}
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex gap-2 max-w-md mx-auto">
+              <button
+                onclick={backspace}
+                class="flex-1 px-4 py-3 text-sm font-medium bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors"
+              >
+                ← Backspace
+              </button>
+              <button
+                onclick={clearInput}
+                class="px-4 py-3 text-sm font-medium bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors"
+              >
+                Clear
+              </button>
+              <button
+                onclick={submitGuess}
+                class="flex-1 px-4 py-3 text-sm font-medium bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
+      {/if}
       <!-- Word history -->
       {#if gameState.usedWords.length > 0}
         <div
