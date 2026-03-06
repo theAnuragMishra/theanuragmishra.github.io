@@ -1,5 +1,5 @@
 const wordList = await fetch(
-  `http://${import.meta.env.PUBLIC_SERVER_URL}/static/words-8ed58bdf0e26b4a0d72b09751857fa8ba570a673.json`,
+  `https://${import.meta.env.PUBLIC_SERVER_URL}/static/words-8ed58bdf0e26b4a0d72b09751857fa8ba570a673.json`,
 ).then((res) => res.json());
 
 const starterWordList = wordList.filter((w: string) => w.length === 10);
