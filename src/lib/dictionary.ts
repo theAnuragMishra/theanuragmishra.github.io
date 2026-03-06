@@ -1,8 +1,8 @@
-import words from "./words.json";
-import starterWords from "./starter-words.json";
+const wordList = await fetch(
+  `http://${import.meta.env.PUBLIC_SERVER_URL}/static/words-8ed58bdf0e26b4a0d72b09751857fa8ba570a673.json`,
+).then((res) => res.json());
 
-const wordList = words as string[];
-const starterWordList = starterWords as string[];
+const starterWordList = wordList.filter((w: string) => w.length === 10);
 
 const wordToIndex = new Map<string, number>();
 const indexToMask = new Uint32Array(wordList.length);
