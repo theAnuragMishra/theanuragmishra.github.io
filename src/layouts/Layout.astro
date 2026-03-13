@@ -33,5 +33,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
             <Footer />
         </main>
+        <img
+            src={`https://${import.meta.env.PUBLIC_SERVER_URL}/api/tracker/visit`}
+            style="display:none"
+        />
     </body>
 </html>
