@@ -4,11 +4,11 @@ import PostLayout from "../../layouts/PostLayout.astro";
 import { getSortedPosts } from "../../utils/content-utils";
 
 export async function getStaticPaths() {
-    const posts = await getSortedPosts();
-    return posts.map((post: any) => ({
-        params: { slug: post.id },
-        props: { post },
-    }));
+  const posts = await getSortedPosts();
+  return posts.map((post: any) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
@@ -16,5 +16,5 @@ const { Content } = await render(post);
 ---
 
 <PostLayout frontmatter={post.data}>
-    <Content />
+  <Content />
 </PostLayout>
